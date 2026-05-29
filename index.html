@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แผนประกันสุขภาพเหมาจ่าย FWD Precious Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --primary: #e86614; 
+        --primary-light: #fff2e8;
+        --text-dark: #333333;
+        --text-grey: #666666;
+        --bg-color: #fcf9f5;
+        --border-color: #e5e5e5;
+        --line-green: #06C755;
+        
+        /* สีเส้นกรอบเวลาปุ่มถูกกดเลือก */
+        --active-border: #f6f3e8; 
+
+        /* Plan Colors */
+        --c-bronze: #cd7f32;
+        --c-silver: #9ca3af;
+        --c-gold: #d4af37;
+        --c-platinum: #5eead4;
+        --c-sapphire: #0f172a;
+        --c-diamond: #0284c7;
+    }
+
+    body {
+        font-family: 'Prompt', sans-serif;
+        background-color: var(--bg-color);
+        margin: 0;
+        padding: 0;
+        color: var(--text-dark);
+        padding-bottom: 100px; 
+    }
+
+    .main-banner { max-width: 1100px; margin: 40px auto 10px auto; padding: 0 20px; }
+    .main-banner > img { width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: block; }
+
+    .container {
+        max-width: 1100px; margin: 20px auto 40px auto; padding: 0 20px;
+        display: flex; gap: 30px; align-items: flex-start;
+    }
+
+    .left-panel {
+        width: 500px; flex-shrink: 0; background: white; border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;
+        align-self: flex-start;
+        position: sticky;
+        top: 20px;
+    }
+
+    .input-section { padding: 25px; }
+    .input-section h2 { font-size: 20px; margin: 0 0 20px 0; color: var(--text-dark); }
+
+    .form-row { display: flex; gap: 15px; margin-bottom: 20px; }
+    .form-group { flex: 1; }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
+
+    /* ปุ่มเลือกเพศ */
+    .btn-select-group { display: flex; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+    .btn-select {
+        flex: 1; padding: 10px; border: none; background: #fafafa; cursor: pointer;
+        font-family: 'Prompt'; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.2s;
+    }
+    .btn-select.active { background: var(--primary-light); color: var(--primary); font-weight: 600; border: 1px solid var(--primary); }
+    
+    /* ปุ่มเลือกรูปแบบความคุ้มครอง (Deductible) */
+    .btn-select-vertical { flex-direction: column; gap: 12px; border: none; overflow: visible; background: transparent; }
+    .btn-select-vertical .btn-select { 
+        width: 100%; border-radius: 8px; border: 2px solid var(--primary); padding: 14px 15px; 
+        justify-content: flex-start; gap: 12px; background: var(--primary-light);
+        color: var(--text-dark); font-weight: 500; font-size: 15px; transition: all 0.2s;
+    }
+    .btn-select-vertical .btn-select i { color: var(--primary); font-size: 18px; transition: all 0.2s; }
+    
+    .btn-select-vertical .btn-select.active { 
+        background: var(--primary); 
+        color: white; 
+        border-color: var(--primary); 
+        box-shadow: inset 0 0 0 2px var(--active-border), 0 4px 10px rgba(232, 102, 20, 0.25); 
+    }
+    .btn-select-vertical .btn-select.active i { color: white; }
+
+    input[type="number"] {
+        width: 100%; padding: 10px 15px; border: 1px solid var(--border-color);
+        border-radius: 8px; font-family: 'Prompt'; font-size: 16px; box-sizing: border-box; height: 44px;
+        transition: border-color 0.2s;
+    }
+    input[type="number"]:focus { outline: none; border-color: var(--primary); }
+
+    .plan-options-grid { 
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px;
+    }
+    
+    /* ปุ่มแผนความคุ้มครอง (Bronze - Diamond) */
+    .plan-opt-btn {
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        padding: 15px 5px; text-align: center; cursor: pointer; background: white;
+        transition: all 0.2s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        position: relative;
+    }
+    .plan-opt-btn:hover { background: var(--primary-light); }
+    
+    .plan-opt-btn.active { 
+        background: var(--primary); 
+        border-color: var(--primary); 
+        box-shadow: inset 0 0 0 2px var(--active-border), 0 4px 12px rgba(232, 102, 20, 0.35); 
+    }
+    
+    .plan-icon { font-size: 24px; margin-bottom: 5px; transition: 0.2s; }
+    .plan-name { font-weight: 700; font-size: 15px; color: var(--text-dark); margin-bottom: 2px; transition: 0.2s;}
+    .plan-limit { font-size: 12px; color: var(--primary); font-weight: 600; transition: 0.2s;}
+    
+    .plan-opt-btn.active .plan-name { color: white; }
+    .plan-opt-btn.active .plan-limit { color: white; }
+    .plan-opt-btn.active .plan-icon { color: white !important; }
+
+    .requirements { margin-top: 20px; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background-color: #fafafa; }
+    .requirements h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; color: var(--text-dark); margin: 0 0 15px 0; }
+    .requirements h3 i { color: var(--primary); }
+    .req-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-grey); }
+    .req-list li { margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
+    .req-list i { margin-top: 3px; color: var(--line-green); }
+
+    /* --- RIGHT PANEL --- */
+    .right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+    .header-right { display: flex; justify-content: space-between; align-items: center; }
+    .header-right h2 { font-size: 22px; margin: 0; color: var(--text-dark); }
+
+    .plan-card {
+        background: white; border: 2px solid var(--primary); border-radius: 12px; padding: 25px;
+        box-shadow: 0 4px 15px rgba(232, 102, 20, 0.1);
+    }
+    .plan-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .plan-title h3 { margin: 0; font-size: 20px; color: var(--text-dark); }
+    .plan-title p { margin: 5px 0 0 0; font-size: 14px; color: var(--text-grey); background: var(--bg-color); padding: 4px 10px; border-radius: 6px; display: inline-block; font-weight: 500;}
+
+    .plan-price-display { text-align: right; }
+    .price-label { font-size: 14px; color: var(--text-grey); margin-bottom: 5px;}
+    .price-amount { font-size: 34px; font-weight: 700; color: var(--primary); }
+    .price-unit { font-size: 16px; font-weight: 400; }
+
+    .plan-details { margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 20px; }
+    .detail-row { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 8px; color: var(--text-dark); align-items: center;}
+    .detail-val { font-weight: 600; color: var(--text-dark); text-align: right; font-size: 16px; }
+    .breakdown-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-grey); margin-bottom: 15px; padding-left: 15px;}
+    
+    .btn-buy {
+        width: 100%; background: var(--line-green); color: white; border: none; padding: 16px; font-size: 16px;
+        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 20px; transition: 0.2s;
+        display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+    .btn-buy:hover { background: #05a044; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(6, 199, 85, 0.2); }
+
+    /* --- VIDEO TIKTOK CONTAINER --- */
+    .video-card {
+        background: white; border-radius: 12px; padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
+        text-align: center;
+    }
+    .video-card h3 {
+        margin: 0 0 15px 0; font-size: 18px; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .tiktok-wrapper {
+        width: 100%; border-radius: 8px; overflow: hidden; display: flex; justify-content: center;
+    }
+
+    /* --- COVERAGE TABLE --- */
+    .coverage-table-container {
+        background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden; border: 1px solid var(--border-color);
+    }
+    .coverage-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .coverage-table th, .coverage-table td { padding: 12px 20px; text-align: right; border-bottom: 1px solid var(--border-color); color: var(--text-dark); }
+    
+    .coverage-table td:first-child { text-align: left; width: 65%; color: var(--text-dark); font-weight: 400; }
+    .coverage-table td:last-child { color: var(--primary) !important; font-weight: 700; font-size: 15px; } 
+
+    .coverage-table tr:nth-child(even) { background-color: #fafafa; }
+    
+    .table-section { background-color: #f9f3ea !important; font-size: 15px; border-bottom: 1px solid var(--border-color); }
+    .table-section td { text-align: left !important; padding: 14px 20px !important; }
+    .table-section .section-title { color: #000000; font-weight: 700; } 
+    .table-section i { color: var(--primary); margin-right: 8px; font-size: 16px; }
+
+    /* --- AGENT CARD --- */
+    .agent-card-right {
+        background: white; border-radius: 12px; padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px;
+        border-left: 5px solid var(--primary); margin-top: 10px;
+    }
+    .agent-profile-img {
+        width: 90px; height: 90px; border-radius: 50%; object-fit: cover; object-position: top center;
+        border: 3px solid var(--primary-light); flex-shrink: 0;
+    }
+    .agent-info { flex: 1; }
+    .agent-info h4 { margin: 0 0 5px 0; color: var(--text-dark); font-size: 18px; }
+    .agent-info p { margin: 0 0 5px 0; color: var(--text-grey); font-size: 14px; }
+    .agent-info .phone { 
+        display: inline-block; background: var(--primary-light); color: var(--primary);
+        padding: 6px 15px; border-radius: 20px; font-weight: 600; font-size: 14px; margin-top: 5px; text-decoration: none;
+    }
+    .agent-qr-container { margin-left: auto; text-align: center; flex-shrink: 0; }
+    .agent-qr-img { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color); padding: 4px; }
+
+    /* --- STICKY BOTTOM BAR --- */
+    .sticky-bar {
+        position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        padding: 15px 0; transform: translateY(100%); transition: transform 0.4s ease-in-out; z-index: 1000; border-top: 2px solid var(--primary);
+    }
+    .sticky-bar.show { transform: translateY(0); }
+    .sticky-content { max-width: 1100px; margin: auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+    .sticky-left { display: flex; align-items: center; gap: 15px; }
+    .sticky-info h4 { margin: 0; font-size: 18px; }
+    .sticky-info p { margin: 0; font-size: 14px; color: var(--text-grey); }
+    .sticky-right { display: flex; align-items: center; gap: 20px; }
+    .sticky-price { font-size: 28px; font-weight: bold; color: var(--primary);}
+    .sticky-btn { background: var(--line-green); color: white; padding: 12px 30px; border-radius: 8px; font-weight: 600; border: none; font-family: 'Prompt'; font-size: 16px; cursor: pointer; }
+
+    @media (max-width: 800px) {
+        .container { flex-direction: column; }
+        .left-panel { width: 100%; position: relative; top: 0; }
+        .plan-options-grid { grid-template-columns: repeat(2, 1fr); }
+        .agent-card-right { flex-direction: column; text-align: center; gap: 15px; }
+        .sticky-content { flex-direction: row; padding: 0 15px; }
+        .sticky-price { font-size: 20px; }
+        .sticky-btn { padding: 8px 15px; font-size: 14px; }
+        .coverage-table td:first-child { width: 50%; }
+    }
+</style>
+</head>
+<body>
+
+<div class="main-banner">
+      <img src="image.png" alt="FWD Precious Care Banner">
+</div>
+
+<div class="container">
+    
+    <div class="left-panel">
+        <div class="input-section">
+            <h2>คำนวณเบี้ยประกันสุขภาพ</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>เพศ</label>
+                    <div class="btn-select-group">
+                        <button class="btn-select active" id="btn-male" onclick="setGender('male')">👨 ชาย</button>
+                        <button class="btn-select" id="btn-female" onclick="setGender('female')">👩 หญิง</button>
+                    </div>
+                </div>
+                <div class="form-group" style="flex: 0.6;">
+                    <label>อายุ (ปี)</label>
+                    <input type="number" id="age-input" value="30" min="1" max="75" oninput="calculate()">
+                    <div style="font-size: 11px; color: #888; margin-top: 4px;">รับประกัน 1 เดือน - 75 ปี</div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label>รูปแบบความคุ้มครอง (Deductible)</label>
+                <div class="btn-select-group btn-select-vertical">
+                    <button class="btn-select active" id="btn-nondeduct" onclick="setDeductible(false)">
+                        <i class="fa-solid fa-circle-check"></i> เหมาจ่ายตั้งแต่บาทแรก (ไม่จ่ายส่วนแรก)
+                    </button>
+                    <button class="btn-select" id="btn-deduct" onclick="setDeductible(true)">
+                        <i class="fa-solid fa-hand-holding-dollar"></i> แบบมีส่วนร่วมจ่าย (ประหยัดเบี้ยสูงสุด 50%)
+                    </button>
+                </div>
+                <div id="deduct-warning" style="font-size: 11px; color: #e86614; margin-top: 8px; display: none;">
+                    *กรณีเด็กอายุต่ำกว่า 11 ปี เงื่อนไขความรับผิดส่วนแรกอาจแตกต่างกันในบางแผน โปรดสอบถามเพิ่มเติม
+                </div>
+            </div>
+
+            <label style="font-weight: 600; color: var(--text-dark); margin-bottom: 12px; display: block;">เลือกแผนความคุ้มครองเหมาจ่าย</label>
+            
+            <div class="plan-options-grid">
+                <div class="plan-opt-btn" id="plan-bronze" onclick="selectPlan('bronze')">
+                    <div class="plan-icon" style="color: var(--c-bronze);"><i class="fa-solid fa-shield"></i></div>
+                    <div class="plan-name">Bronze</div>
+                    <div class="plan-limit">1 ล้านบาท/ปี</div>
+                </div>
+                <div class="plan-opt-btn" id="plan-silver" onclick="selectPlan('silver')">
+                    <div class="plan-icon" style="color: var(--c-silver);"><i class="fa-solid fa-shield"></i></div>
+                    <div class="plan-name">Silver</div>
+                    <div class="plan-limit">3 ล้านบาท/ปี</div>
+                </div>
+                <div class="plan-opt-btn active" id="plan-gold" onclick="selectPlan('gold')">
+                    <div class="plan-icon" style="color: var(--c-gold);"><i class="fa-solid fa-shield"></i></div>
+                    <div class="plan-name">Gold</div>
+                    <div class="plan-limit">6 ล้านบาท/ปี</div>
+                </div>
+                <div class="plan-opt-btn" id="plan-platinum" onclick="selectPlan('platinum')">
+                    <div class="plan-icon" style="color: var(--c-platinum);"><i class="fa-solid fa-shield-cat"></i></div>
+                    <div class="plan-name">Platinum</div>
+                    <div class="plan-limit">12 ล้านบาท/ปี</div>
+                </div>
+                <div class="plan-opt-btn" id="plan-sapphire" onclick="selectPlan('sapphire')">
+                    <div class="plan-icon" style="color: var(--c-sapphire);"><i class="fa-solid fa-gem"></i></div>
+                    <div class="plan-name">Sapphire</div>
+                    <div class="plan-limit">40 ล้านบาท/ปี</div>
+                </div>
+                <div class="plan-opt-btn" id="plan-diamond" onclick="selectPlan('diamond')">
+                    <div class="plan-icon" style="color: var(--c-diamond);"><i class="fa-regular fa-gem"></i></div>
+                    <div class="plan-name">Diamond</div>
+                    <div class="plan-limit">100 ล้านบาท/ปี</div>
+                </div>
+            </div>
+            
+            <div id="sum-error" style="color: red; font-size: 13px; display: none; margin-bottom: 15px;"></div>
+            
+            <div class="requirements">
+                <h3><i class="fa-solid fa-notes-medical"></i> <span style="color: #000;">จุดเด่นแผน Precious Care</span></h3>
+                <ul class="req-list">
+                    <li><i class="fa-solid fa-check"></i> เหมาจ่ายค่ารักษาพยาบาลผู้ป่วยใน จ่ายตามจริง</li>
+                    <li><i class="fa-solid fa-check"></i> ครอบคลุมค่าห้อง ค่าอาหาร ค่าบริการพยาบาล</li>
+                    <li><i class="fa-solid fa-check"></i> คุ้มครองแบบไม่มีความรับผิดส่วนแรก (เคลมได้ตั้งแต่บาทแรก)</li>
+                    <li><i class="fa-solid fa-check"></i> พ่วงสัญญาหลักเพื่อความมั่นคง ทุน 60,000 บาท</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="header-right">
+            <h2>สรุปแผนความคุ้มครอง</h2>
+        </div>
+
+        <div class="plan-card">
+            <div class="plan-header">
+                <div class="plan-title">
+                    <h3>FWD Precious Care</h3>
+                    <p id="display-plan-sub">แผน Gold (เหมาจ่าย 6 ล้านบาท)</p>
+                </div>
+                <div class="plan-price-display">
+                    <div class="price-label">เบี้ยประกันรวมโดยประมาณ / ปี</div>
+                    <span class="price-amount" id="total-price">-</span> <span class="price-unit">บาท</span>
+                </div>
+            </div>
+            
+            <div class="plan-details">
+                <div class="detail-row">
+                    <span>1. ประกันชีวิตหลัก (ตลอดชีพ 99/99)</span>
+                    <span class="detail-val" id="main-price">-</span>
+                </div>
+                <div class="breakdown-row">ทุนคุ้มครองชีวิต คงที่ 60,000 บาท</div>
+                
+                <div class="detail-row" style="margin-top:15px;">
+                    <span>2. ประกันสุขภาพเหมาจ่าย</span>
+                    <span class="detail-val" id="rider-price">-</span>
+                </div>
+                <div class="breakdown-row" id="deduct-display" style="color: var(--primary); font-weight: 600; display:none;">
+                    มีความรับผิดส่วนแรก <span id="display-deduct-amount">50,000</span> บาท/ครั้ง
+                </div>
+                <div class="breakdown-row">ความคุ้มครองสูงสุด <span id="display-rider-sum">6,000,000</span> บาท/ปี</div>
+
+                <button class="btn-buy" onclick="sendToLine()">
+                    <i class="fa-brands fa-line" style="font-size: 24px;"></i> ส่งสรุปข้อมูลเข้า LINE เพื่อสอบถาม
+                </button>
+            </div>
+        </div>
+
+        <!-- กล่องสำหรับวิดีโอ TikTok -->
+        <div class="video-card">
+            <h3><i class="fa-brands fa-tiktok" style="color: #000;"></i> ทำความรู้จักแผน FWD Precious Care</h3>
+            <div class="tiktok-wrapper">
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@toifwd/video/7414088266082684167" data-video-id="7414088266082684167" style="max-width: 605px; min-width: 325px; margin: 0;">
+                    <section>
+                        <a target="_blank" title="@toifwd" href="https://www.tiktok.com/@toifwd?refer=embed">@toifwd</a>
+                    </section>
+                </blockquote>
+                <script async src="https://www.tiktok.com/embed.js"></script>
+            </div>
+        </div>
+
+        <div class="coverage-table-container">
+            <table class="coverage-table">
+                <!-- หมวดผู้ป่วยใน -->
+                <tr class="table-section">
+                    <td colspan="2"><i class="fa-solid fa-bed-pulse"></i> <span class="section-title">หมวดผู้ป่วยใน (IPD)</span></td>
+                </tr>
+                <tr>
+                    <td>ผลประโยชน์สูงสุดต่อปี</td>
+                    <td id="tbl-max-limit" style="font-size: 18px;">6,000,000</td>
+                </tr>
+                <tr>
+                    <td>ค่าห้องและค่าอาหาร ค่าบริการใน รพ. (ต่อวัน)</td>
+                    <td id="tbl-room-board">6,000</td>
+                </tr>
+                <tr>
+                    <td>ค่าบริการทางการแพทย์ ผ่าตัด ตรวจวินิจฉัย</td>
+                    <td>จ่ายตามจริง</td>
+                </tr>
+                
+                <!-- หมวดผู้ป่วยนอก -->
+                <tr class="table-section">
+                    <td colspan="2"><i class="fa-solid fa-stethoscope"></i> <span class="section-title">หมวดผู้ป่วยนอก (OPD)</span></td>
+                </tr>
+                <tr>
+                    <td>ค่ารักษาพยาบาลผู้ป่วยนอก (ต่อปี)</td>
+                    <td id="tbl-opd">10,000</td>
+                </tr>
+
+                <!-- หมวด 3 โรคร้ายแรง -->
+                <tr class="table-section">
+                    <td colspan="2"><i class="fa-solid fa-heart-pulse"></i> <span class="section-title">เพิ่มเติมกรณีเจ็บป่วย 3 โรคร้ายแรง*</span></td>
+                </tr>
+                <tr>
+                    <td>เงินชดเชยเมื่อป่วยด้วย 3 โรคร้ายแรง</td>
+                    <td id="tbl-ci-money">50,000</td>
+                </tr>
+                <tr>
+                    <td>ค่าห้องและค่าอาหารเพิ่มเติม (ต่อวัน)</td>
+                    <td id="tbl-ci-room">6,000</td>
+                </tr>
+
+                <!-- ผลประโยชน์เพิ่มเติมอื่นๆ -->
+                <tr class="table-section">
+                    <td colspan="2"><i class="fa-solid fa-star"></i> <span class="section-title">ผลประโยชน์เพิ่มเติมอื่นๆ</span></td>
+                </tr>
+                <tr>
+                    <td>ค่าตรวจสุขภาพ / ฉีดวัคซีน (ต่อปี)</td>
+                    <td id="tbl-health-check">-</td>
+                </tr>
+                <tr>
+                    <td>ค่ารักษาทางทันตกรรม / สายตา (จ่ายร่วม 20%)</td>
+                    <td id="tbl-dental">-</td>
+                </tr>
+                <tr>
+                    <td>ค่ารักษาโดยแพทย์ทางเลือก</td>
+                    <td id="tbl-alt-med">-</td>
+                </tr>
+                <tr>
+                    <td>ค่าตั้งครรภ์และคลอดบุตร / จิตเวช</td>
+                    <td id="tbl-maternity">-</td>
+                </tr>
+            </table>
+            <div style="font-size: 11px; color: #888; padding: 10px 20px; background: #fff;">
+                * 3 โรคร้ายแรง ได้แก่ โรคมะเร็งระยะลุกลาม, โรคกล้ามเนื้อหัวใจตายเฉียบพลันจากการขาดเลือด, โรคหลอดเลือดสมองแตกหรืออุดตัน
+            </div>
+        </div>
+
+        <div class="agent-card-right">
+            <img src="agent.jpg" alt="ตัวแทนประกัน" class="agent-profile-img" onerror="this.src='https://via.placeholder.com/90/e86614/fff.png?text=Agent';">
+            <div class="agent-info">
+                <h4>นฤมล คำใบ <span style="font-weight: 400;">(ผู้จัดการขาย)</span></h4>
+                <p>ใบอนุญาตตัวแทนประกันชีวิต: 6901010926</p>
+                <p style="color: var(--primary); font-weight: 400;">ประสบการณ์ในธุรกิจ <span id="experience-text"></span></p>
+                <a href="tel:0869017235" class="phone"><i class="fa fa-phone"></i> 086-901-7235</a>
+            </div>
+            <div class="agent-qr-container">
+                <img src="line-qr.png" alt="LINE QR Code" class="agent-qr-img" onerror="this.src='https://via.placeholder.com/80/fcf9f5/333.png?text=QR+Code';">
+                <div style="font-size: 11px; color: #888; margin-top: 5px;">สแกนแอดไลน์</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="sticky-bar" id="sticky-bar">
+    <div class="sticky-content">
+        <div class="sticky-left">
+            <div class="sticky-info">
+                <h4>FWD Precious Care</h4>
+                <p>เพศ<span id="sticky-gender-text">ชาย</span>, อายุ <span id="sticky-age-text">30</span> ปี | <span id="sticky-plan-text">แผน Gold</span></p>
+            </div>
+        </div>
+        <div class="sticky-right">
+            <div class="sticky-price"><span id="sticky-price-amount">0</span> <span style="font-size: 16px; font-weight: 400; color:var(--text-dark);">บาท/ปี</span></div>
+            <button class="sticky-btn" onclick="sendToLine()">สนใจแผนนี้</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const planDetails = {
+        'bronze': { name: 'Bronze', limit: 1000000, room: 2500, opd: 3000, ciMoney: '-', ciRoom: '-', dental: '-', healthCheck: '-', altMed: '-', maternity: '-', deductAmount: 30000 },
+        'silver': { name: 'Silver', limit: 3000000, room: 4000, opd: 5000, ciMoney: '-', ciRoom: '-', dental: '-', healthCheck: '-', altMed: '-', maternity: '-', deductAmount: 30000 },
+        'gold': { name: 'Gold', limit: 6000000, room: 6000, opd: 10000, ciMoney: 50000, ciRoom: 6000, dental: '-', healthCheck: '-', altMed: '-', maternity: '-', deductAmount: 50000 },
+        'platinum': { name: 'Platinum', limit: 12000000, room: 8000, opd: 18000, ciMoney: 50000, ciRoom: 8000, dental: '-', healthCheck: '-', altMed: 5000, maternity: '-', deductAmount: 50000 },
+        'sapphire': { name: 'Sapphire', limit: 40000000, room: 12000, opd: 60000, ciMoney: 100000, ciRoom: 12000, dental: 6000, healthCheck: 6000, altMed: 10000, maternity: 100000, deductAmount: 100000 },
+        'diamond': { name: 'Diamond', limit: 100000000, room: 25000, opd: 'จ่ายตามจริง', ciMoney: 100000, ciRoom: 25000, dental: 15000, healthCheck: 15000, altMed: 20000, maternity: 200000, deductAmount: 100000 }
+    };
+
+    const milestoneAges = [20, 25, 30, 35, 40, 45, 50, 55, 60];
+    const rateDB = {
+        baseM: [14.00, 15.70, 17.85, 20.60, 24.13, 28.74, 34.84, 43.14, 54.84],
+        baseF: [11.91, 13.31, 15.07, 17.31, 20.19, 23.95, 28.96, 35.81, 45.49],
+        nonDeduct: {
+            bronze: [18558, 18131, 19030, 20620, 21841, 23955, 26417, 33499, 42624],
+            silver: [26044, 26158, 28063, 29169, 29766, 34011, 40077, 46194, 53831],
+            gold:   [30282, 30269, 32197, 33639, 34384, 38618, 45096, 52074, 60736],
+            platinum:[36541, 36358, 37789, 40548, 44925, 49079, 56841, 66434, 77126],
+            sapphire:[57626, 59695, 63373, 65176, 66869, 73831, 85765, 100672, 118096],
+            diamond: [67619, 69529, 73754, 76413, 79155, 88149, 103100, 121734, 143446]
+        },
+        deduct: {
+            bronze: [8771, 7447, 7245, 8632, 10124, 11775, 14130, 21454, 32688],
+            silver: [11629, 10159, 10267, 11978, 13275, 16311, 20234, 28533, 42152],
+            gold:   [13338, 11728, 12262, 13253, 14025, 18062, 23697, 33028, 48322],
+            platinum:[15780, 13606, 12929, 14251, 18176, 22280, 28764, 40182, 57077],
+            sapphire:[36689, 36656, 37240, 37511, 39079, 45022, 55811, 69694, 90601],
+            diamond: [42307, 41435, 41739, 42569, 47260, 54681, 67460, 85492, 112578]
+        }
+    };
+
+    let currentGender = 'male';
+    let currentPlanId = 'gold';
+    let isDeductible = false;
+
+    function formatNumber(num) { 
+        if(typeof num === 'string') return num;
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+    }
+
+    function interpolateRate(age, array) {
+        if(age <= 20) return array[0];
+        if(age >= 60) return array[8];
+        for(let i=0; i < milestoneAges.length - 1; i++) {
+            if(age >= milestoneAges[i] && age <= milestoneAges[i+1]) {
+                let range = milestoneAges[i+1] - milestoneAges[i];
+                let progress = (age - milestoneAges[i]) / range;
+                return array[i] + progress * (array[i+1] - array[i]);
+            }
+        }
+        return array[0];
+    }
+
+    function calculateExperience() {
+        let startDate = new Date(2006, 5, 28);
+        let today = new Date();
+        let years = today.getFullYear() - startDate.getFullYear();
+        let months = today.getMonth() - startDate.getMonth();
+        let days = today.getDate() - startDate.getDate();
+
+        if (days < 0) {
+            months--;
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        let expText = "";
+        if (years > 0) expText += years + " ปี ";
+        if (months > 0) expText += months + " เดือน";
+
+        if (expText === "") expText = "0 เดือน"; 
+
+        document.getElementById('experience-text').innerText = expText.trim();
+    }
+
+    function setGender(gender) {
+        currentGender = gender;
+        document.getElementById('btn-male').classList.remove('active');
+        document.getElementById('btn-female').classList.remove('active');
+        document.getElementById(`btn-${gender}`).classList.add('active');
+        document.getElementById('sticky-gender-text').innerText = (gender === 'male') ? 'ชาย' : 'หญิง';
+        calculate();
+    }
+
+    function setDeductible(state) {
+        isDeductible = state;
+        document.getElementById('btn-nondeduct').classList.remove('active');
+        document.getElementById('btn-deduct').classList.remove('active');
+        
+        if(state) {
+            document.getElementById('btn-deduct').classList.add('active');
+            document.getElementById('deduct-display').style.display = 'flex';
+        } else {
+            document.getElementById('btn-nondeduct').classList.add('active');
+            document.getElementById('deduct-display').style.display = 'none';
+        }
+        calculate();
+    }
+
+    function selectPlan(planId) {
+        currentPlanId = planId;
+        document.querySelectorAll('.plan-opt-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`plan-${planId}`).classList.add('active');
+        calculate();
+    }
+
+    function calculate() {
+        let age = parseInt(document.getElementById('age-input').value) || 0;
+        let sumError = document.getElementById('sum-error');
+        let deductWarn = document.getElementById('deduct-warning');
+        
+        if (age < 1 || age > 75) {
+            sumError.innerText = "*แพ็กเกจนี้รับประกันตั้งแต่อายุ 1 เดือน - 75 ปีเท่านั้น";
+            sumError.style.display = 'block';
+            resetDisplay();
+            return;
+        } else if (age < 11 && (currentPlanId === 'sapphire' || currentPlanId === 'diamond')) {
+            sumError.innerText = "*แผน Sapphire และ Diamond รับประกันตั้งแต่อายุ 11 ปีขึ้นไป";
+            sumError.style.display = 'block';
+            resetDisplay();
+            return;
+        } else {
+            sumError.style.display = 'none';
+        }
+
+        if(age < 11 && isDeductible) {
+            deductWarn.style.display = 'block';
+        } else {
+            deductWarn.style.display = 'none';
+        }
+
+        document.getElementById('sticky-age-text').innerText = age;
+        
+        let planInfo = planDetails[currentPlanId];
+        let deductText = isDeductible ? `(Deduct ${formatNumber(planInfo.deductAmount)})` : ``;
+        
+        document.getElementById('display-plan-sub').innerText = `แผน ${planInfo.name} (เหมาจ่าย ${formatNumber(planInfo.limit)} บาท)`;
+        document.getElementById('display-rider-sum').innerText = formatNumber(planInfo.limit);
+        document.getElementById('sticky-plan-text').innerText = `แผน ${planInfo.name} ${deductText}`;
+        document.getElementById('display-deduct-amount').innerText = formatNumber(planInfo.deductAmount);
+
+        document.getElementById('tbl-max-limit').innerText = typeof planInfo.limit === 'number' ? formatNumber(planInfo.limit) : planInfo.limit;
+        document.getElementById('tbl-room-board').innerText = typeof planInfo.room === 'number' ? formatNumber(planInfo.room) : planInfo.room;
+        document.getElementById('tbl-opd').innerText = typeof planInfo.opd === 'number' ? formatNumber(planInfo.opd) : planInfo.opd;
+        document.getElementById('tbl-ci-money').innerText = typeof planInfo.ciMoney === 'number' ? formatNumber(planInfo.ciMoney) : planInfo.ciMoney;
+        document.getElementById('tbl-ci-room').innerText = typeof planInfo.ciRoom === 'number' ? formatNumber(planInfo.ciRoom) : planInfo.ciRoom;
+        document.getElementById('tbl-health-check').innerText = typeof planInfo.healthCheck === 'number' ? formatNumber(planInfo.healthCheck) : planInfo.healthCheck;
+        document.getElementById('tbl-dental').innerText = typeof planInfo.dental === 'number' ? formatNumber(planInfo.dental) : planInfo.dental;
+        document.getElementById('tbl-alt-med').innerText = typeof planInfo.altMed === 'number' ? formatNumber(planInfo.altMed) : planInfo.altMed;
+        document.getElementById('tbl-maternity').innerText = typeof planInfo.maternity === 'number' ? formatNumber(planInfo.maternity) : planInfo.maternity;
+
+        let rateMainArray = currentGender === 'male' ? rateDB.baseM : rateDB.baseF;
+        let mainRateVal = interpolateRate(age, rateMainArray);
+        let premiumMain = Math.ceil((mainRateVal * 60000) / 1000);
+
+        let riderDbRef = isDeductible ? rateDB.deduct[currentPlanId] : rateDB.nonDeduct[currentPlanId];
+        let premiumRider = Math.round(interpolateRate(age, riderDbRef));
+        
+        let totalPremium = premiumMain + premiumRider;
+
+        document.getElementById('main-price').innerText = formatNumber(premiumMain) + " บาท";
+        document.getElementById('rider-price').innerText = formatNumber(premiumRider) + " บาท";
+        document.getElementById('total-price').innerText = formatNumber(totalPremium);
+        document.getElementById('sticky-price-amount').innerText = formatNumber(totalPremium);
+    }
+
+    function resetDisplay() {
+        document.getElementById('main-price').innerText = "- บาท";
+        document.getElementById('rider-price').innerText = "- บาท";
+        document.getElementById('total-price').innerText = "-";
+        document.getElementById('sticky-price-amount').innerText = "-";
+    }
+
+    function sendToLine() {
+        let age = document.getElementById('age-input').value;
+        let price = document.getElementById('sticky-price-amount').innerText;
+        if(price === '-' || price === '0') { alert("กรุณาตรวจสอบอายุหรือแผนให้ถูกต้อง"); return; }
+
+        let planInfo = planDetails[currentPlanId];
+        let typeStr = isDeductible ? `มีส่วนร่วมจ่าย (${formatNumber(planInfo.deductAmount)} บ.)` : `ไม่มีความรับผิดส่วนแรก`;
+        let msg = `สอบถามแผน FWD Precious Care\nเพศ: ${currentGender==='male'?'ชาย':'หญิง'}\nอายุ: ${age} ปี\nเลือกแผน: ${planInfo.name}\nรูปแบบ: ${typeStr}\nเบี้ยรวมประมาณ: ${price} บาท/ปี`;
+        let url = "https://line.me/R/oaMessage/@toifwd/?" + encodeURIComponent(msg);
+        window.open(url, '_blank');
+    }
+
+    window.addEventListener('scroll', () => {
+        let stickyBar = document.getElementById('sticky-bar');
+        if (window.scrollY > 300) { stickyBar.classList.add('show'); } else { stickyBar.classList.remove('show'); }
+    });
+
+    calculateExperience();
+    calculate(); 
+</script>
+
+</body>
+</html>
