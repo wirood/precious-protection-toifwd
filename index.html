@@ -49,7 +49,7 @@
     }
 
     .left-panel {
-        width: 500px; flex-shrink: 0; background: white; border-radius: 12px;
+        width: 450px; flex-shrink: 0; background: white; border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;
         align-self: flex-start;
         position: sticky;
@@ -82,8 +82,7 @@
     
     .btn-select-vertical .btn-select.active { 
         background: var(--primary); 
-        color: white; 
-        border-color: var(--primary); 
+        color: white; border-color: var(--primary); 
         box-shadow: inset 0 0 0 2px var(--active-border), 0 4px 10px rgba(232, 102, 20, 0.25); 
     }
     .btn-select-vertical .btn-select.active i { color: white; }
@@ -95,48 +94,37 @@
     }
     input[type="number"]:focus { outline: none; border-color: var(--primary); }
 
-    .plan-options-grid { 
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px;
-    }
+    .plan-options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
     
     /* ปุ่มแผนความคุ้มครอง (Bronze - Diamond) */
     .plan-opt-btn {
-        border: 2px solid var(--primary);
-        border-radius: 8px;
-        padding: 15px 5px; text-align: center; cursor: pointer; background: white;
+        border: 2px solid var(--border-color); border-radius: 8px; padding: 12px 5px; text-align: center; cursor: pointer; background: white;
         transition: all 0.2s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        position: relative;
     }
-    .plan-opt-btn:hover { background: var(--primary-light); }
+    .plan-opt-btn:hover { border-color: var(--primary); }
+    .plan-opt-btn.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 4px 10px rgba(232, 102, 20, 0.25); }
     
-    .plan-opt-btn.active { 
-        background: var(--primary); 
-        border-color: var(--primary); 
-        box-shadow: inset 0 0 0 2px var(--active-border), 0 4px 12px rgba(232, 102, 20, 0.35); 
-    }
+    .plan-icon { font-size: 22px; margin-bottom: 5px; transition: 0.2s; }
+    .plan-name { font-weight: 700; font-size: 14px; color: var(--text-dark); margin-bottom: 2px; transition: 0.2s;}
+    .plan-limit { font-size: 11px; color: var(--primary); font-weight: 600; transition: 0.2s;}
     
-    .plan-icon { font-size: 24px; margin-bottom: 5px; transition: 0.2s; }
-    .plan-name { font-weight: 700; font-size: 15px; color: var(--text-dark); margin-bottom: 2px; transition: 0.2s;}
-    .plan-limit { font-size: 12px; color: var(--primary); font-weight: 600; transition: 0.2s;}
-    
-    .plan-opt-btn.active .plan-name { color: white; }
-    .plan-opt-btn.active .plan-limit { color: white; }
+    .plan-opt-btn.active .plan-name, .plan-opt-btn.active .plan-limit { color: white; }
     .plan-opt-btn.active .plan-icon { color: white !important; }
 
-    .requirements { margin-top: 20px; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background-color: #fafafa; }
-    .requirements h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; color: var(--text-dark); margin: 0 0 15px 0; }
-    .requirements h3 i { color: var(--primary); }
-    .req-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-grey); }
-    .req-list li { margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
-    .req-list i { margin-top: 3px; color: var(--line-green); }
-
-    /* --- RIGHT PANEL --- */
+    /* --- RIGHT PANEL & PDF CONTAINER --- */
     .right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+    
+    /* โครงสร้างสำหรับการจัดหน้า PDF */
+    .pdf-container { background: #fff; border-radius: 12px; display: flex; flex-direction: column; gap: 20px; padding: 0; }
+    .pdf-export-mode { padding: 25px !important; background: #fff !important; }
+
+    /* ตั้งค่าไม่ให้ตัดเนื้อหาขาดครึ่งหน้าเวลาขึ้นหน้า 2 ของ PDF */
+    .plan-card, .coverage-table-container, .timeline-section, .agent-card-right {
+        page-break-inside: avoid; 
+    }
+
     .header-right { display: flex; justify-content: space-between; align-items: center; }
     .header-right h2 { font-size: 22px; margin: 0; color: var(--text-dark); }
-    
-    /* สำหรับการปรินท์เป็นเอกสาร เราใส่คลาส pdf-container เพื่อให้พื้นหลังเป็นสีขาวล้วนตอนเซฟ */
-    .pdf-container { background: #fcf9f5; display: flex; flex-direction: column; gap: 20px;}
 
     .plan-card {
         background: white; border: 2px solid var(--primary); border-radius: 12px; padding: 25px;
@@ -156,69 +144,70 @@
     .detail-val { font-weight: 600; color: var(--text-dark); text-align: right; font-size: 16px; }
     .breakdown-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-grey); margin-bottom: 15px; padding-left: 15px;}
     
+    .action-buttons { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
     .btn-buy {
-        width: 100%; background: var(--line-green); color: white; border: none; padding: 16px; font-size: 16px;
-        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 20px; transition: 0.2s;
+        width: 100%; background: var(--line-green); color: white; border: none; padding: 14px; font-size: 16px;
+        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s;
         display: flex; justify-content: center; align-items: center; gap: 8px;
     }
-    .btn-buy:hover { background: #05a044; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(6, 199, 85, 0.2); }
+    .btn-buy:hover { background: #05a044; }
     
     .btn-pdf {
-        width: 100%; background: #333333; color: white; border: none; padding: 16px; font-size: 16px;
-        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 10px; transition: 0.2s;
+        width: 100%; background: #333; color: white; border: none; padding: 14px; font-size: 16px;
+        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s;
         display: flex; justify-content: center; align-items: center; gap: 8px;
     }
-    .btn-pdf:hover { background: #1a1a1a; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); }
-
-    /* --- VIDEO TIKTOK CONTAINER --- */
-    .video-card {
-        background: white; border-radius: 12px; padding: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
-        text-align: center;
-    }
-    .video-card h3 {
-        margin: 0 0 15px 0; font-size: 18px; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .tiktok-wrapper {
-        width: 100%; border-radius: 8px; overflow: hidden; display: flex; justify-content: center;
-    }
+    .btn-pdf:hover { background: #1a1a1a; }
 
     /* --- COVERAGE TABLE --- */
     .coverage-table-container {
-        background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        overflow: hidden; border: 1px solid var(--border-color);
+        background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid var(--border-color);
     }
     .coverage-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .coverage-table th, .coverage-table td { padding: 12px 20px; text-align: right; border-bottom: 1px solid var(--border-color); color: var(--text-dark); }
-    
     .coverage-table td:first-child { text-align: left; width: 65%; color: var(--text-dark); font-weight: 400; }
     .coverage-table td:last-child { color: var(--primary) !important; font-weight: 700; font-size: 15px; } 
-
     .coverage-table tr:nth-child(even) { background-color: #fafafa; }
-    
     .table-section { background-color: #f9f3ea !important; font-size: 15px; border-bottom: 1px solid var(--border-color); }
     .table-section td { text-align: left !important; padding: 14px 20px !important; }
     .table-section .section-title { color: #000000; font-weight: 700; } 
     .table-section i { color: var(--primary); margin-right: 8px; font-size: 16px; }
 
+    /* --- TIMELINE (WAITING PERIOD) --- */
+    .timeline-section {
+        background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); padding: 25px;
+    }
+    .timeline-section h3 { margin: 0 0 20px 0; color: var(--text-dark); font-size: 18px; text-align: center; }
+    .timeline {
+        position: relative; padding-left: 30px; margin: 0 auto; max-width: 500px;
+    }
+    .timeline::before {
+        content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 4px; background: #ffe4d1; border-radius: 4px;
+    }
+    .tl-item { position: relative; margin-bottom: 25px; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-dot {
+        position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%;
+        background: var(--primary); border: 4px solid #fff; box-shadow: 0 0 0 2px var(--primary);
+    }
+    .tl-dot.dark { background: #333; box-shadow: 0 0 0 2px #333; }
+    .tl-content h4 { margin: 0 0 5px 0; font-size: 16px; color: var(--primary); }
+    .tl-content h4.dark-text { color: #333; }
+    .tl-content p { margin: 0; font-size: 13px; color: var(--text-grey); line-height: 1.5; }
+    .tl-content p strong { color: var(--text-dark); }
+
     /* --- AGENT CARD --- */
     .agent-card-right {
-        background: white; border-radius: 12px; padding: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px;
-        border-left: 5px solid var(--primary); margin-top: 10px;
+        background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        display: flex; align-items: center; gap: 20px; border-left: 5px solid var(--primary);
     }
     .agent-profile-img {
-        width: 90px; height: 90px; border-radius: 50%; object-fit: cover; object-position: top center;
-        border: 3px solid var(--primary-light); flex-shrink: 0;
+        width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-light); flex-shrink: 0;
     }
     .agent-info { flex: 1; }
     .agent-info h4 { margin: 0 0 5px 0; color: var(--text-dark); font-size: 18px; }
     .agent-info p { margin: 0 0 5px 0; color: var(--text-grey); font-size: 14px; }
-    .agent-info .phone { 
-        display: inline-block; background: var(--primary-light); color: var(--primary);
-        padding: 6px 15px; border-radius: 20px; font-weight: 600; font-size: 14px; margin-top: 5px; text-decoration: none;
-    }
-    .agent-qr-container { margin-left: auto; text-align: center; flex-shrink: 0; }
+    .agent-qr-container { text-align: center; flex-shrink: 0; }
     .agent-qr-img { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color); padding: 4px; }
 
     /* --- STICKY BOTTOM BAR --- */
@@ -231,7 +220,6 @@
     .sticky-left { display: flex; align-items: center; gap: 15px; }
     .sticky-info h4 { margin: 0; font-size: 18px; }
     .sticky-info p { margin: 0; font-size: 14px; color: var(--text-grey); }
-    .sticky-right { display: flex; align-items: center; gap: 20px; }
     .sticky-price { font-size: 28px; font-weight: bold; color: var(--primary);}
     .sticky-btn { background: var(--line-green); color: white; padding: 12px 30px; border-radius: 8px; font-weight: 600; border: none; font-family: 'Prompt'; font-size: 16px; cursor: pointer; }
 
@@ -239,7 +227,7 @@
         .container { flex-direction: column; }
         .left-panel { width: 100%; position: relative; top: 0; }
         .plan-options-grid { grid-template-columns: repeat(2, 1fr); }
-        .agent-card-right { flex-direction: column; text-align: center; gap: 15px; }
+        .agent-card-right { flex-direction: column; text-align: center; }
         .sticky-content { flex-direction: row; padding: 0 15px; }
         .sticky-price { font-size: 20px; }
         .sticky-btn { padding: 8px 15px; font-size: 14px; }
@@ -250,7 +238,7 @@
 <body>
 
 <div class="main-banner">
-      <img src="image.png" alt="FWD Precious Care Banner">
+      <img src="image.png" alt="FWD Precious Care Banner" onerror="this.src='https://via.placeholder.com/1100x400/fff2e8/e86614?text=FWD+Precious+Care+Banner';">
 </div>
 
 <div class="container">
@@ -270,7 +258,7 @@
                 <div class="form-group" style="flex: 0.6;">
                     <label>อายุ (ปี)</label>
                     <input type="number" id="age-input" value="30" min="1" max="75" oninput="calculate()">
-                    <div style="font-size: 11px; color: #888; margin-top: 4px;">รับประกัน 1 เดือน - 75 ปี</div>
+                    <div style="font-size: 11px; color: #888; margin-top: 4px;">รับประกันสูงสุด 75 ปี</div>
                 </div>
             </div>
 
@@ -278,14 +266,11 @@
                 <label>รูปแบบความคุ้มครอง (Deductible)</label>
                 <div class="btn-select-group btn-select-vertical">
                     <button class="btn-select active" id="btn-nondeduct" onclick="setDeductible(false)">
-                        <i class="fa-solid fa-circle-check"></i> เหมาจ่ายตั้งแต่บาทแรก (ไม่จ่ายส่วนแรก)
+                        <i class="fa-solid fa-circle-check"></i> เหมาจ่ายตั้งแต่บาทแรก
                     </button>
                     <button class="btn-select" id="btn-deduct" onclick="setDeductible(true)">
-                        <i class="fa-solid fa-hand-holding-dollar"></i> แบบมีส่วนร่วมจ่าย (ประหยัดเบี้ยสูงสุด 50%)
+                        <i class="fa-solid fa-hand-holding-dollar"></i> แบบมีส่วนร่วมจ่าย (ประหยัดเบี้ย)
                     </button>
-                </div>
-                <div id="deduct-warning" style="font-size: 11px; color: #e86614; margin-top: 8px; display: none;">
-                    *กรณีเด็กอายุต่ำกว่า 11 ปี เงื่อนไขความรับผิดส่วนแรกอาจแตกต่างกันในบางแผน โปรดสอบถามเพิ่มเติม
                 </div>
             </div>
 
@@ -299,37 +284,36 @@
             </div>
 
             <label style="font-weight: 600; color: var(--text-dark); margin-bottom: 12px; display: block;">เลือกแผนความคุ้มครองเหมาจ่าย</label>
-            
             <div class="plan-options-grid">
                 <div class="plan-opt-btn" id="plan-bronze" onclick="selectPlan('bronze')">
                     <div class="plan-icon" style="color: var(--c-bronze);"><i class="fa-solid fa-shield"></i></div>
                     <div class="plan-name">Bronze</div>
-                    <div class="plan-limit">1 ล้านบาท/ปี</div>
+                    <div class="plan-limit">1 ล้านบาท</div>
                 </div>
                 <div class="plan-opt-btn" id="plan-silver" onclick="selectPlan('silver')">
                     <div class="plan-icon" style="color: var(--c-silver);"><i class="fa-solid fa-shield"></i></div>
                     <div class="plan-name">Silver</div>
-                    <div class="plan-limit">3 ล้านบาท/ปี</div>
+                    <div class="plan-limit">3 ล้านบาท</div>
                 </div>
                 <div class="plan-opt-btn active" id="plan-gold" onclick="selectPlan('gold')">
                     <div class="plan-icon" style="color: var(--c-gold);"><i class="fa-solid fa-shield"></i></div>
                     <div class="plan-name">Gold</div>
-                    <div class="plan-limit">6 ล้านบาท/ปี</div>
+                    <div class="plan-limit">6 ล้านบาท</div>
                 </div>
                 <div class="plan-opt-btn" id="plan-platinum" onclick="selectPlan('platinum')">
                     <div class="plan-icon" style="color: var(--c-platinum);"><i class="fa-solid fa-shield-cat"></i></div>
                     <div class="plan-name">Platinum</div>
-                    <div class="plan-limit">12 ล้านบาท/ปี</div>
+                    <div class="plan-limit">12 ล้านบาท</div>
                 </div>
                 <div class="plan-opt-btn" id="plan-sapphire" onclick="selectPlan('sapphire')">
                     <div class="plan-icon" style="color: var(--c-sapphire);"><i class="fa-solid fa-gem"></i></div>
                     <div class="plan-name">Sapphire</div>
-                    <div class="plan-limit">40 ล้านบาท/ปี</div>
+                    <div class="plan-limit">40 ล้านบาท</div>
                 </div>
                 <div class="plan-opt-btn" id="plan-diamond" onclick="selectPlan('diamond')">
                     <div class="plan-icon" style="color: var(--c-diamond);"><i class="fa-regular fa-gem"></i></div>
                     <div class="plan-name">Diamond</div>
-                    <div class="plan-limit">100 ล้านบาท/ปี</div>
+                    <div class="plan-limit">100 ล้านบาท</div>
                 </div>
             </div>
             
@@ -340,7 +324,6 @@
                 <ul class="req-list">
                     <li><i class="fa-solid fa-check"></i> เหมาจ่ายค่ารักษาพยาบาลผู้ป่วยใน จ่ายตามจริง</li>
                     <li><i class="fa-solid fa-check"></i> ครอบคลุมค่าห้อง ค่าอาหาร ค่าบริการพยาบาล</li>
-                    <li><i class="fa-solid fa-check"></i> คุ้มครองแบบไม่มีความรับผิดส่วนแรก (เคลมได้ตั้งแต่บาทแรก)</li>
                     <li><i class="fa-solid fa-check"></i> พ่วงสัญญาหลักเพื่อความมั่นคง ทุน 60,000 บาท</li>
                 </ul>
             </div>
@@ -389,18 +372,6 @@
                         <i class="fa-solid fa-file-pdf" style="font-size: 20px;"></i> ดาวน์โหลดเอกสารสรุปแผน (PDF)
                     </button>
                 </div>
-            </div>
-        </div>
-
-        <div class="video-card hide-on-pdf">
-            <h3><i class="fa-brands fa-tiktok" style="color: #000;"></i> ทำความรู้จักแผน FWD Precious Care</h3>
-            <div class="tiktok-wrapper">
-                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@toifwd/video/7414088266082684167" data-video-id="7414088266082684167" style="max-width: 605px; min-width: 325px; margin: 0;">
-                    <section>
-                        <a target="_blank" title="@toifwd" href="https://www.tiktok.com/@toifwd?refer=embed">@toifwd</a>
-                    </section>
-                </blockquote>
-                <script async src="https://www.tiktok.com/embed.js"></script>
             </div>
         </div>
 
@@ -462,8 +433,52 @@
                     <td id="tbl-maternity">-</td>
                 </tr>
             </table>
-            <div style="font-size: 11px; color: #888; padding: 10px 20px; background: #fff;">
-                * 3 โรคร้ายแรง ได้แก่ โรคมะเร็งระยะลุกลาม, โรคกล้ามเนื้อหัวใจตายเฉียบพลันจากการขาดเลือด, โรคหลอดเลือดสมองแตกหรืออุดตัน
+        </div>
+
+        <div class="timeline-section">
+            <h3><i class="fa-regular fa-clock"></i> ระยะเวลารอคอย (Waiting Period)</h3>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot dark"></div>
+                    <div class="tl-content">
+                        <h4 class="dark-text">พร้อมดูแลคุณทันที</h4>
+                        <p>คุ้มครองทันที หากเกิด<strong>อุบัติเหตุฉุกเฉิน</strong></p>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <h4>30 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
+                        <p>คุ้มครองหากเจ็บป่วยและเข้ารับการรักษา (ดูแลทั้ง <strong>IPD</strong> และ <strong>OPD</strong>)<br>
+                        คุ้มครองการดูแลสุขภาพ* (ค่าฉีดวัคซีน, ค่าดูแลรักษาสายตา, ค่าทันตกรรม)</p>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <h4>90 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
+                        <p>คุ้มครองดูแลพิเศษ <strong>รับเงินก้อนหากเจ็บป่วยด้วย 3 โรคร้ายแรง</strong><br>
+                        (โรคมะเร็งระยะลุกลาม, โรคกล้ามเนื้อหัวใจตายเฉียบพลันจากการขาดเลือด, โรคหลอดเลือดสมองแตกหรืออุดตัน)</p>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <h4>120 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
+                        <p>คุ้มครองหากเจ็บป่วยดังนี้: เนื้องอก ถุงน้ำ หรือมะเร็งทุกชนิด (ยกเว้นมะเร็งระยะลุกลาม 90 วัน), ริดสีดวงทวาร, ไส้เลื่อนทุกชนิด, ต้อเนื้อ หรือต้อกระจก, การตัดทอนซิลหรืออะดีนอยด์, นิ่วทุกชนิด, เส้นเลือดขอดที่ขา, เยื่อบุโพรงมดลูกเจริญผิดที่<br>
+                        คุ้มครองเพิ่มเติมค่ารักษาโดย<strong>แพทย์ทางเลือก*</strong></p>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot dark"></div>
+                    <div class="tl-content">
+                        <h4 class="dark-text">365 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
+                        <p>คุ้มครองเพิ่มขึ้นเพื่อครอบคลุมการรักษา* (ค่าตรวจสุขภาพประจำปี, ค่ารักษาด้านจิตเวช, ค่ารักษาพยาบาลสำหรับการตั้งครรภ์และคลอดบุตร, ค่ารักษาภาวะแทรกซ้อนขณะตั้งครรภ์และหลังคลอดบุตร)</p>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 11px; color: #888; text-align: center; margin-top: 20px;">
+                *เงื่อนไขความคุ้มครองขึ้นอยู่กับแผนที่ท่านเลือก และผลประโยชน์บางหมวดสามารถใช้ได้หลังสัญญาฯ มีผลบังคับต่อเนื่องและมีการต่ออายุในปีกรมธรรม์ถัดไป
             </div>
         </div>
 
@@ -473,11 +488,11 @@
                 <h4>นฤมล คำใบ <span style="font-weight: 400;">(ผู้จัดการขาย)</span></h4>
                 <p>ใบอนุญาตตัวแทนประกันชีวิต: 6901010926</p>
                 <p style="color: var(--primary); font-weight: 400;">ประสบการณ์ในธุรกิจ <span id="experience-text"></span></p>
-                <a href="tel:0869017235" class="phone"><i class="fa fa-phone"></i> 086-901-7235</a>
+                <a href="tel:0869017235" style="display:inline-block; margin-top:5px; font-size:14px; font-weight:600; text-decoration:none; color:var(--text-dark);"><i class="fa fa-phone" style="color:var(--primary);"></i> 086-901-7235</a>
             </div>
             <div class="agent-qr-container">
                 <img src="line-qr.png" alt="LINE QR Code" class="agent-qr-img" onerror="this.src='https://via.placeholder.com/80/fcf9f5/333.png?text=QR+Code';">
-                <div style="font-size: 11px; color: #888; margin-top: 5px;">สแกนแอดไลน์</div>
+                <div style="font-size: 11px; color: #888; margin-top: 5px;">แสกนสอบถามฟรี</div>
             </div>
         </div>
 
@@ -501,15 +516,21 @@
 
 <script>
     const planDetails = {
-        'bronze': { name: 'Bronze', limit: 1000000, room: 2500, opd: 3000, ciMoney: '-', ciRoom: '-', dental: '-', healthCheck: '-', altMed: '-', maternity: '-', deductAmount: 30000 },
-        'silver': { name: 'Silver', limit: 3000000, room: 4000, opd: 5000, ciMoney: '-', ciRoom: '-', dental: '-', healthCheck: '-', altMed: '-', maternity: '-', deductAmount: 30000 },
-        'gold': { name: 'Gold', limit: 6000000, room: 6000, opd: 10000, ciMoney: 50000, ciRoom: 6000, dental: '-', healthCheck: '-', altMed: '-', maternity: '-', deductAmount: 50000 },
-        'platinum': { name: 'Platinum', limit: 12000000, room: 8000, opd: 18000, ciMoney: 50000, ciRoom: 8000, dental: '-', healthCheck: '-', altMed: 5000, maternity: '-', deductAmount: 50000 },
-        'sapphire': { name: 'Sapphire', limit: 40000000, room: 12000, opd: 60000, ciMoney: 100000, ciRoom: 12000, dental: 6000, healthCheck: 6000, altMed: 10000, maternity: 100000, deductAmount: 100000 },
-        'diamond': { name: 'Diamond', limit: 100000000, room: 25000, opd: 'จ่ายตามจริง', ciMoney: 100000, ciRoom: 25000, dental: 15000, healthCheck: 15000, altMed: 20000, maternity: 200000, deductAmount: 100000 }
+        'bronze': { name: 'Bronze', limit: 1000000, room: 2500, opd: 3000, ciMoney: '-', ciRoom: '-', dental: '-', healthCheck: '-', altMed: '-', maternity: '-', minAgeNonDeduct: 6, minAgeDeduct: 1 },
+        'silver': { name: 'Silver', limit: 3000000, room: 4000, opd: 5000, ciMoney: '-', ciRoom: '-', dental: '-', healthCheck: '-', altMed: '-', maternity: '-', minAgeNonDeduct: 6, minAgeDeduct: 1 },
+        'gold': { name: 'Gold', limit: 6000000, room: 6000, opd: 10000, ciMoney: 50000, ciRoom: 6000, dental: '-', healthCheck: '-', altMed: '-', maternity: '-', minAgeNonDeduct: 6, minAgeDeduct: 1 },
+        'platinum': { name: 'Platinum', limit: 12000000, room: 8000, opd: 18000, ciMoney: 50000, ciRoom: 8000, dental: '-', healthCheck: '-', altMed: 5000, maternity: '-', minAgeNonDeduct: 1, minAgeDeduct: 1 },
+        'sapphire': { name: 'Sapphire', limit: 40000000, room: 12000, opd: 60000, ciMoney: 100000, ciRoom: 12000, dental: 6000, healthCheck: 6000, altMed: 10000, maternity: 100000, minAgeNonDeduct: 11, minAgeDeduct: 11 },
+        'diamond': { name: 'Diamond', limit: 100000000, room: 25000, opd: 'จ่ายตามจริง', ciMoney: 100000, ciRoom: 25000, dental: 15000, healthCheck: 15000, altMed: 20000, maternity: 200000, minAgeNonDeduct: 11, minAgeDeduct: 11 }
     };
 
-    // ฐานข้อมูลเบี้ยประกัน รายอายุ 1 - 75 ปี (Array Index 0 = อายุ 1 ปี)
+    function getDynamicDeductAmount(planId, age) {
+        if (planId === 'bronze' || planId === 'silver') return age <= 5 ? 15000 : 30000;
+        if (planId === 'gold' || planId === 'platinum') return age <= 5 ? 25000 : 50000;
+        if (planId === 'sapphire' || planId === 'diamond') return 100000;
+        return 0;
+    }
+
     const rateDB = {
         baseM: [9.62, 9.78, 9.94, 10.12, 10.30, 10.49, 10.68, 10.89, 11.11, 11.34, 11.58, 11.82, 12.07, 12.33, 12.59, 12.86, 13.13, 13.42, 13.71, 14.00, 14.31, 14.64, 14.98, 15.33, 15.70, 16.09, 16.49, 16.92, 17.37, 17.85, 18.34, 18.87, 19.41, 19.99, 20.60, 21.23, 21.90, 22.61, 23.35, 24.13, 24.95, 25.82, 26.74, 27.71, 28.74, 29.82, 30.97, 32.18, 33.47, 34.84, 36.30, 37.84, 39.50, 41.26, 43.14, 45.16, 47.33, 49.65, 52.15, 54.84, 57.74, 60.86, 64.22, 67.85, 71.78, 76.02, 80.61, 85.58, 90.97, 96.80, 103.10, 109.90, 117.23, 125.12, 133.59],
         baseF: [8.59, 8.71, 8.83, 8.96, 9.10, 9.24, 9.38, 9.53, 9.69, 9.86, 10.03, 10.20, 10.39, 10.58, 10.78, 10.99, 11.20, 11.43, 11.67, 11.91, 12.17, 12.43, 12.71, 13.00, 13.31, 13.63, 13.96, 14.31, 14.68, 15.07, 15.47, 15.90, 16.34, 16.81, 17.31, 17.83, 18.37, 18.95, 19.55, 20.19, 20.86, 21.57, 22.32, 23.11, 23.95, 24.84, 25.77, 26.77, 27.83, 28.96, 30.15, 31.43, 32.80, 34.25, 35.81, 37.48, 39.27, 41.19, 43.26, 45.49, 47.89, 50.48, 53.29, 56.34, 59.64, 63.23, 67.13, 71.36, 75.96, 80.95, 86.36, 92.21, 98.53, 105.35, 112.72],
@@ -534,7 +555,7 @@
     let currentGender = 'male';
     let currentPlanId = 'gold';
     let isDeductible = false;
-    let currentOccClass = 1; // 1 หมายถึงขั้น 1-2, 3 คือขั้น 3, 4 คือขั้น 4
+    let currentOccClass = 1;
 
     function formatNumber(num) { 
         if(typeof num === 'string') return num;
@@ -605,11 +626,12 @@
     function calculate() {
         let age = parseInt(document.getElementById('age-input').value) || 0;
         let sumError = document.getElementById('sum-error');
-        let deductWarn = document.getElementById('deduct-warning');
         
-        // ตรวจสอบช่วงอายุเบื้องต้น
-        if (age < 1 || age > 75) {
-            sumError.innerText = "*แพ็กเกจนี้รับประกันตั้งแต่อายุ 1 เดือน - 75 ปีเท่านั้น (กรุณาระบุอายุ 1-75 ปี)";
+        let planInfo = planDetails[currentPlanId];
+        let minAgeAllowed = isDeductible ? planInfo.minAgeDeduct : planInfo.minAgeNonDeduct;
+        
+        if (age < minAgeAllowed || age > 75) {
+            sumError.innerText = `*แผน ${planInfo.name} (${isDeductible ? 'แบบมีส่วนร่วมจ่าย' : 'เหมาจ่ายตั้งแต่บาทแรก'}) รับประกันสำหรับผู้ที่มีอายุ ${minAgeAllowed} - 75 ปี เท่านั้น`;
             sumError.style.display = 'block';
             resetDisplay();
             return;
@@ -617,21 +639,15 @@
             sumError.style.display = 'none';
         }
 
-        if(age < 11 && isDeductible) {
-            deductWarn.style.display = 'block';
-        } else {
-            deductWarn.style.display = 'none';
-        }
-
         document.getElementById('sticky-age-text').innerText = age;
         
-        let planInfo = planDetails[currentPlanId];
-        let deductText = isDeductible ? `(Deduct ${formatNumber(planInfo.deductAmount)})` : ``;
+        let actualDeduct = getDynamicDeductAmount(currentPlanId, age);
+        let deductText = isDeductible ? `(Deduct ${formatNumber(actualDeduct)})` : ``;
         
         document.getElementById('display-plan-sub').innerText = `แผน ${planInfo.name} (เหมาจ่าย ${formatNumber(planInfo.limit)} บาท)`;
         document.getElementById('display-rider-sum').innerText = formatNumber(planInfo.limit);
         document.getElementById('sticky-plan-text').innerText = `แผน ${planInfo.name} ${deductText}`;
-        document.getElementById('display-deduct-amount').innerText = formatNumber(planInfo.deductAmount);
+        document.getElementById('display-deduct-amount').innerText = formatNumber(actualDeduct);
 
         document.getElementById('tbl-max-limit').innerText = typeof planInfo.limit === 'number' ? formatNumber(planInfo.limit) : planInfo.limit;
         document.getElementById('tbl-room-board').innerText = typeof planInfo.room === 'number' ? formatNumber(planInfo.room) : planInfo.room;
@@ -643,16 +659,13 @@
         document.getElementById('tbl-alt-med').innerText = typeof planInfo.altMed === 'number' ? formatNumber(planInfo.altMed) : planInfo.altMed;
         document.getElementById('tbl-maternity').innerText = typeof planInfo.maternity === 'number' ? formatNumber(planInfo.maternity) : planInfo.maternity;
 
-        // ดึงเรทเบี้ยประกันหลัก
         let rateMainArray = currentGender === 'male' ? rateDB.baseM : rateDB.baseF;
-        let mainRateVal = rateMainArray[age - 1]; // Array เริ่มที่ index 0 สำหรับอายุ 1 ปี
+        let mainRateVal = rateMainArray[age - 1]; 
         let premiumMain = Math.ceil((mainRateVal * 60000) / 1000);
 
-        // ดึงเรทเบี้ยสัญญาเพิ่มเติมสุขภาพเหมาจ่าย (ฐานอาชีพ 1-2)
         let riderDbRef = isDeductible ? rateDB.deduct[currentPlanId] : rateDB.nonDeduct[currentPlanId];
         let basePremiumRider = riderDbRef[age - 1];
         
-        // ถ้าเบี้ยเป็น 0 หมายถึงแผนนี้ไม่รองรับการขายในช่วงอายุนี้
         if (basePremiumRider === 0) {
             sumError.innerText = "* แผนความคุ้มครองนี้ ไม่เปิดรับประกันในช่วงอายุที่คุณเลือก กรุณาเปลี่ยนแผน";
             sumError.style.display = 'block';
@@ -660,14 +673,11 @@
             return;
         }
 
-        // ตัวคูณเบี้ยตามขั้นอาชีพ
         let occMultiplier = 1.0;
         if (currentOccClass === 3) occMultiplier = 1.30;
         if (currentOccClass === 4) occMultiplier = 1.45;
 
-        // คำนวณเบี้ย Rider ที่คูณขั้นอาชีพแล้ว (ปัดเศษให้ตรงตามตาราง)
         let premiumRider = Math.round(basePremiumRider * occMultiplier);
-        
         let totalPremium = premiumMain + premiumRider;
 
         document.getElementById('main-price').innerText = formatNumber(premiumMain) + " บาท";
@@ -689,14 +699,15 @@
         if(price === '-' || price === '0') { alert("กรุณาตรวจสอบอายุหรือแผนให้ถูกต้อง"); return; }
 
         let planInfo = planDetails[currentPlanId];
-        let typeStr = isDeductible ? `มีส่วนร่วมจ่าย (${formatNumber(planInfo.deductAmount)} บ.)` : `ไม่มีความรับผิดส่วนแรก`;
+        let actualDeduct = getDynamicDeductAmount(currentPlanId, parseInt(age));
+        let typeStr = isDeductible ? `มีส่วนร่วมจ่าย (${formatNumber(actualDeduct)} บ.)` : `ไม่มีความรับผิดส่วนแรก`;
         let occStr = currentOccClass === 1 ? '1-2' : currentOccClass;
+        
         let msg = `สอบถามแผน FWD Precious Care\nเพศ: ${currentGender==='male'?'ชาย':'หญิง'}\nอายุ: ${age} ปี\nขั้นอาชีพ: ${occStr}\nเลือกแผน: ${planInfo.name}\nรูปแบบ: ${typeStr}\nเบี้ยรวมประมาณ: ${price} บาท/ปี`;
         let url = "https://line.me/R/oaMessage/@toifwd/?" + encodeURIComponent(msg);
         window.open(url, '_blank');
     }
 
-    // ฟังก์ชันสำหรับ สร้างไฟล์ PDF
     function generatePDF() {
         let age = document.getElementById('age-input').value;
         let price = document.getElementById('sticky-price-amount').innerText;
@@ -704,47 +715,45 @@
 
         const element = document.getElementById('pdf-content');
         
-        // 1. ซ่อนปุ่มและวิดีโอ ที่ไม่ต้องการให้ออกไปใน PDF
         const elementsToHide = element.querySelectorAll('.hide-on-pdf');
         elementsToHide.forEach(el => el.style.display = 'none');
+        element.classList.add('pdf-export-mode');
 
-        // เปลี่ยนข้อความปุ่มระหว่างรอ
         const btn = document.getElementById('btn-generate-pdf');
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังสร้างเอกสาร...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเตรียมเอกสาร...';
 
-        // 2. ตั้งชื่อไฟล์ (เพิ่มข้อมูลขั้นอาชีพลงไปในชื่อไฟล์ด้วย)
         const planName = planDetails[currentPlanId].name;
         const genderStr = currentGender === 'male' ? 'ชาย' : 'หญิง';
-        const typeStr = isDeductible ? 'มีส่วนร่วมจ่าย' : 'เหมาจ่ายตั้งแต่บาทแรก';
-        const occStr = currentOccClass === 1 ? '1-2' : currentOccClass;
-        const fileName = `สรุปแผน_PreciousCare_${planName}_ขั้นอาชีพ${occStr}_${genderStr}_${age}ปี_${price}บาท.pdf`;
+        const typeStr = isDeductible ? 'Deductible' : 'NonDeduct';
+        const fileName = `สรุปแผน_FWD_PreciousCare_${planName}_${typeStr}_อายุ${age}ปี.pdf`;
 
-        // 3. กำหนดค่า Option ของ html2pdf
         const opt = {
-            margin:       10, // ระยะขอบ (มิลลิเมตร)
+            margin:       [15, 10, 15, 10], 
             filename:     fileName,
-            image:        { type: 'jpeg', quality: 0.98 },
+            image:        { type: 'jpeg', quality: 1.0 },
             html2canvas:  { 
-                scale: 2, // เพิ่มความละเอียดภาพ x2
-                useCORS: true, // สำคัญ! เพื่อให้โหลดภาพโปรไฟล์และ QR Code จากภายนอกได้
-                scrollY: 0
+                scale: 3, 
+                useCORS: true, 
+                scrollY: 0,
+                windowWidth: 800 
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // 4. สั่ง Generate
-        html2pdf().set(opt).from(element).save().then(() => {
-            // 5. เมื่อเซฟเสร็จ คืนค่า UI กลับมาตามเดิม
-            elementsToHide.forEach(el => {
-                if(el.classList.contains('action-buttons') || el.classList.contains('header-right')) {
-                    el.style.display = 'flex';
-                } else {
-                    el.style.display = 'block';
-                }
+        setTimeout(() => {
+            html2pdf().set(opt).from(element).save().then(() => {
+                elementsToHide.forEach(el => {
+                    if(el.classList.contains('action-buttons') || el.classList.contains('header-right')) {
+                        el.style.display = 'flex';
+                    } else {
+                        el.style.display = 'block';
+                    }
+                });
+                element.classList.remove('pdf-export-mode');
+                btn.innerHTML = originalText;
             });
-            btn.innerHTML = originalText;
-        });
+        }, 500); 
     }
 
     window.addEventListener('scroll', () => {
