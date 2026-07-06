@@ -28,6 +28,7 @@
         --c-diamond: #0284c7;
     }
 
+    * { box-sizing: border-box; }
     body { font-family: 'Prompt', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; color: var(--text-dark); padding-bottom: 100px; }
     .main-banner { max-width: 1100px; margin: 40px auto 10px auto; padding: 0 20px; }
     .main-banner > img { width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: block; }
@@ -69,9 +70,17 @@
     .req-list i { margin-top: 3px; color: var(--line-green); }
 
     .right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+    
+    /* --- CSS สำหรับจัดการตอนเป็น PDF โดยเฉพาะ --- */
     .pdf-container { background: #fff; border-radius: 12px; display: flex; flex-direction: column; gap: 20px; padding: 0; }
-    .pdf-export-mode { padding: 25px !important; background: #fff !important; }
-    .plan-card, .coverage-table-container, .timeline-section, .agent-card-right { page-break-inside: avoid; }
+    .pdf-export-mode { padding: 20px !important; background: #fff !important; width: 800px !important; max-width: none !important; margin: 0 auto; border-radius: 0; box-shadow: none;}
+    
+    /* ป้องกันเนื้อหาโดนหั่นครึ่งหน้ากระดาษ */
+    .plan-card, .coverage-table-container, .timeline-section, .agent-card-right { 
+        page-break-inside: avoid; 
+        break-inside: avoid; /* บังคับเว้นบรรทัดสำหรับบราวเซอร์ยุคใหม่ */
+        margin-bottom: 5px; /* เพิ่มระยะห่างเวลาขึ้นหน้าใหม่เล็กน้อย */
+    }
 
     .header-right { display: flex; justify-content: space-between; align-items: center; }
     .header-right h2 { font-size: 22px; margin: 0; color: var(--text-dark); }
@@ -115,7 +124,6 @@
     .tl-content h4 { margin: 0 0 5px 0; font-size: 16px; color: var(--primary); }
     .tl-content h4.dark-text { color: #333; }
     .tl-content p { margin: 0; font-size: 13px; color: var(--text-grey); line-height: 1.5; }
-    .tl-content p strong { color: var(--text-dark); }
 
     .agent-card-right { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px; border-left: 5px solid var(--primary); }
     .agent-profile-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-light); flex-shrink: 0; }
@@ -315,45 +323,20 @@
             <div class="timeline">
                 <div class="tl-item">
                     <div class="tl-dot dark"></div>
-                    <div class="tl-content">
-                        <h4 class="dark-text">พร้อมดูแลคุณทันที</h4>
-                        <p>คุ้มครองทันที หากเกิด<strong>อุบัติเหตุฉุกเฉิน</strong></p>
-                    </div>
+                    <div class="tl-content"><h4 class="dark-text">พร้อมดูแลคุณทันที</h4><p>คุ้มครองทันที หากเกิด<strong>อุบัติเหตุฉุกเฉิน</strong></p></div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-content">
-                        <h4>30 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
-                        <p>คุ้มครองหากเจ็บป่วยและเข้ารับการรักษา (ดูแลทั้ง <strong>IPD</strong> และ <strong>OPD</strong>)<br>
-                        คุ้มครองการดูแลสุขภาพ* (ค่าฉีดวัคซีน, ค่าดูแลรักษาสายตา, ค่าทันตกรรม)</p>
-                    </div>
+                    <div class="tl-content"><h4>30 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4><p>คุ้มครองหากเจ็บป่วยและเข้ารับการรักษา (ดูแลทั้ง IPD และ OPD)</p></div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-content">
-                        <h4>90 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
-                        <p>คุ้มครองดูแลพิเศษ <strong>รับเงินก้อนหากเจ็บป่วยด้วย 3 โรคร้ายแรง</strong><br>
-                        (โรคมะเร็งระยะลุกลาม, โรคกล้ามเนื้อหัวใจตายเฉียบพลันจากการขาดเลือด, โรคหลอดเลือดสมองแตกหรืออุดตัน)</p>
-                    </div>
+                    <div class="tl-content"><h4>90 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4><p>คุ้มครองดูแลพิเศษ <strong>รับเงินก้อนหากเจ็บป่วยด้วย 3 โรคร้ายแรง</strong></p></div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-dot"></div>
-                    <div class="tl-content">
-                        <h4>120 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
-                        <p>คุ้มครองหากเจ็บป่วยดังนี้: เนื้องอก ถุงน้ำ หรือมะเร็งทุกชนิด (ยกเว้นมะเร็งระยะลุกลาม 90 วัน), ริดสีดวงทวาร, ไส้เลื่อนทุกชนิด, ต้อเนื้อ หรือต้อกระจก, การตัดทอนซิลหรืออะดีนอยด์, นิ่วทุกชนิด, เส้นเลือดขอดที่ขา, เยื่อบุโพรงมดลูกเจริญผิดที่<br>
-                        คุ้มครองเพิ่มเติมค่ารักษาโดย<strong>แพทย์ทางเลือก*</strong></p>
-                    </div>
+                    <div class="tl-content"><h4>120 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4><p>คุ้มครองเนื้องอก ถุงน้ำ มะเร็งทุกชนิด, ริดสีดวง, ไส้เลื่อน, ต้อ, ทอนซิล, นิ่ว, เส้นเลือดขอด</p></div>
                 </div>
-                <div class="tl-item">
-                    <div class="tl-dot dark"></div>
-                    <div class="tl-content">
-                        <h4 class="dark-text">365 วัน <span style="font-size:12px; font-weight:400; color:#888;">(หลังสัญญามีผลบังคับ)</span></h4>
-                        <p>คุ้มครองเพิ่มขึ้นเพื่อครอบคลุมการรักษา* (ค่าตรวจสุขภาพประจำปี, ค่ารักษาด้านจิตเวช, ค่ารักษาพยาบาลสำหรับการตั้งครรภ์และคลอดบุตร, ค่ารักษาภาวะแทรกซ้อนขณะตั้งครรภ์และหลังคลอดบุตร)</p>
-                    </div>
-                </div>
-            </div>
-            <div style="font-size: 11px; color: #888; text-align: center; margin-top: 20px;">
-                *เงื่อนไขความคุ้มครองขึ้นอยู่กับแผนที่ท่านเลือก และผลประโยชน์บางหมวดสามารถใช้ได้หลังสัญญาฯ มีผลบังคับต่อเนื่องและมีการต่ออายุในปีกรมธรรม์ถัดไป
             </div>
         </div>
 
@@ -406,8 +389,8 @@
         return 0;
     }
 
-    // โครงสร้างฐานข้อมูลที่แยกเพศและรูปแบบ Deductible เรียบร้อยแล้ว
-    // นำชุดตัวเลขทั้ง 75 ค่า มาอัปเดตทับข้อมูลด้านล่างให้สมบูรณ์ก่อนใช้งาน
+    // โครงสร้างฐานข้อมูลที่แยกเพศและรูปแบบ Deductible 
+    // นำชุดตัวเลขทั้ง 75 ค่า มาอัปเดตทับข้อมูลเก่าด้านล่างนี้ให้สมบูรณ์ก่อนใช้งานจริง
     const oldNonDeduct = {
         bronze: [0, 0, 0, 0, 0, 42315, 41501, 40687, 39874, 39060, 25101, 24302, 23503, 22703, 21904, 21105, 20306, 19723, 19140, 18558, 17975, 17393, 17639, 17885, 18131, 18378, 18624, 18759, 18894, 19030, 19165, 19300, 19740, 20180, 20620, 21060, 21500, 21614, 21727, 21841, 21954, 22068, 22697, 23326, 23955, 24584, 25213, 25614, 26016, 26417, 26818, 27220, 29313, 31406, 33499, 35592, 37686, 39332, 40978, 42624, 44270, 45916, 50996, 56076, 61156, 66236, 71316, 80403, 89489, 98576, 107662, 116749, 124495, 132241, 139987],
         silver: [0, 0, 0, 0, 0, 55494, 54427, 53359, 52292, 51225, 33371, 32454, 31538, 30621, 29705, 28788, 27871, 27262, 26653, 26044, 25434, 24825, 25269, 25714, 26158, 26602, 27046, 27385, 27724, 28063, 28401, 28740, 28883, 29026, 29169, 29312, 29455, 29559, 29662, 29766, 29869, 29973, 31319, 32665, 34011, 35357, 36703, 37828, 38952, 40077, 41202, 42326, 43616, 44905, 46194, 47483, 48773, 50459, 52145, 53831, 55517, 57203, 61764, 66324, 70885, 75445, 80006, 90191, 100377, 110562, 120748, 130933, 139621, 148310, 156998],
@@ -565,7 +548,7 @@
         const typeStr = isDeductible ? 'Deductible' : 'NonDeduct';
         const fileName = `สรุปแผน_FWD_PreciousCare_${planName}_${typeStr}_อายุ${age}ปี.pdf`;
 
-        const opt = { margin: [15, 10, 15, 10], filename: fileName, image: { type: 'jpeg', quality: 1.0 }, html2canvas: { scale: 3, useCORS: true, scrollY: 0, windowWidth: 800 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+        const opt = { margin: [15, 10, 15, 10], filename: fileName, image: { type: 'jpeg', quality: 1.0 }, html2canvas: { scale: 3, useCORS: true, scrollY: 0, windowWidth: 800 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['css', 'legacy'] } };
 
         setTimeout(() => {
             html2pdf().set(opt).from(element).save().then(() => {
