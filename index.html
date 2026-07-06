@@ -18,11 +18,8 @@
         --bg-color: #fcf9f5;
         --border-color: #e5e5e5;
         --line-green: #06C755;
-        
-        /* สีเส้นกรอบเวลาปุ่มถูกกดเลือก */
         --active-border: #f6f3e8; 
 
-        /* Plan Colors */
         --c-bronze: #cd7f32;
         --c-silver: #9ca3af;
         --c-gold: #d4af37;
@@ -31,138 +28,73 @@
         --c-diamond: #0284c7;
     }
 
-    body {
-        font-family: 'Prompt', sans-serif;
-        background-color: var(--bg-color);
-        margin: 0;
-        padding: 0;
-        color: var(--text-dark);
-        padding-bottom: 100px; 
-    }
-
+    body { font-family: 'Prompt', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; color: var(--text-dark); padding-bottom: 100px; }
     .main-banner { max-width: 1100px; margin: 40px auto 10px auto; padding: 0 20px; }
     .main-banner > img { width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: block; }
-
-    .container {
-        max-width: 1100px; margin: 20px auto 40px auto; padding: 0 20px;
-        display: flex; gap: 30px; align-items: flex-start;
-    }
-
-    .left-panel {
-        width: 450px; flex-shrink: 0; background: white; border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;
-        align-self: flex-start;
-        position: sticky;
-        top: 20px;
-    }
-
+    .container { max-width: 1100px; margin: 20px auto 40px auto; padding: 0 20px; display: flex; gap: 30px; align-items: flex-start; }
+    
+    .left-panel { width: 450px; flex-shrink: 0; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: sticky; top: 20px; }
     .input-section { padding: 25px; }
     .input-section h2 { font-size: 20px; margin: 0 0 20px 0; color: var(--text-dark); }
-
     .form-row { display: flex; gap: 15px; margin-bottom: 20px; }
     .form-group { flex: 1; }
     .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
 
-    /* ปุ่มเลือก */
     .btn-select-group { display: flex; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
-    .btn-select {
-        flex: 1; padding: 10px; border: none; background: #fafafa; cursor: pointer;
-        font-family: 'Prompt'; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.2s;
-    }
+    .btn-select { flex: 1; padding: 10px; border: none; background: #fafafa; cursor: pointer; font-family: 'Prompt'; font-size: 15px; transition: 0.2s; }
     .btn-select.active { background: var(--primary-light); color: var(--primary); font-weight: 600; border: 1px solid var(--primary); }
     
-    /* ปุ่มเลือกรูปแบบความคุ้มครอง (Deductible) */
-    .btn-select-vertical { flex-direction: column; gap: 12px; border: none; overflow: visible; background: transparent; }
-    .btn-select-vertical .btn-select { 
-        width: 100%; border-radius: 8px; border: 2px solid var(--primary); padding: 14px 15px; 
-        justify-content: flex-start; gap: 12px; background: var(--primary-light);
-        color: var(--text-dark); font-weight: 500; font-size: 15px; transition: all 0.2s;
-    }
-    .btn-select-vertical .btn-select i { color: var(--primary); font-size: 18px; transition: all 0.2s; }
-    
-    .btn-select-vertical .btn-select.active { 
-        background: var(--primary); 
-        color: white; border-color: var(--primary); 
-        box-shadow: inset 0 0 0 2px var(--active-border), 0 4px 10px rgba(232, 102, 20, 0.25); 
-    }
+    .btn-select-vertical { flex-direction: column; gap: 12px; border: none; background: transparent; }
+    .btn-select-vertical .btn-select { width: 100%; border-radius: 8px; border: 2px solid var(--primary); padding: 14px 15px; text-align: left; background: var(--primary-light); color: var(--text-dark); font-weight: 500; display: flex; gap: 10px; align-items: center; justify-content: flex-start;}
+    .btn-select-vertical .btn-select i { font-size: 18px; color: var(--primary); }
+    .btn-select-vertical .btn-select.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: inset 0 0 0 2px var(--active-border), 0 4px 10px rgba(232, 102, 20, 0.25); }
     .btn-select-vertical .btn-select.active i { color: white; }
 
-    input[type="number"] {
-        width: 100%; padding: 10px 15px; border: 1px solid var(--border-color);
-        border-radius: 8px; font-family: 'Prompt'; font-size: 16px; box-sizing: border-box; height: 44px;
-        transition: border-color 0.2s;
-    }
+    input[type="number"] { width: 100%; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Prompt'; font-size: 16px; box-sizing: border-box; height: 44px; }
     input[type="number"]:focus { outline: none; border-color: var(--primary); }
 
     .plan-options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
-    
-    /* ปุ่มแผนความคุ้มครอง (Bronze - Diamond) */
-    .plan-opt-btn {
-        border: 2px solid var(--border-color); border-radius: 8px; padding: 12px 5px; text-align: center; cursor: pointer; background: white;
-        transition: all 0.2s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
+    .plan-opt-btn { border: 2px solid var(--border-color); border-radius: 8px; padding: 12px 5px; text-align: center; cursor: pointer; background: white; transition: 0.2s; display: flex; flex-direction: column; align-items: center;}
     .plan-opt-btn:hover { border-color: var(--primary); }
     .plan-opt-btn.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 4px 10px rgba(232, 102, 20, 0.25); }
-    
-    .plan-icon { font-size: 22px; margin-bottom: 5px; transition: 0.2s; }
-    .plan-name { font-weight: 700; font-size: 14px; color: var(--text-dark); margin-bottom: 2px; transition: 0.2s;}
-    .plan-limit { font-size: 11px; color: var(--primary); font-weight: 600; transition: 0.2s;}
-    
-    .plan-opt-btn.active .plan-name, .plan-opt-btn.active .plan-limit { color: white; }
-    .plan-opt-btn.active .plan-icon { color: white !important; }
+    .plan-opt-btn.active * { color: white !important; }
+    .plan-icon { font-size: 22px; margin-bottom: 5px; }
+    .plan-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+    .plan-limit { font-size: 11px; color: var(--primary); font-weight: 600; }
 
-    /* --- RIGHT PANEL & PDF CONTAINER --- */
+    .requirements { margin-top: 20px; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background-color: #fafafa; }
+    .requirements h3 { font-size: 16px; display: flex; align-items: center; gap: 8px; color: var(--text-dark); margin: 0 0 15px 0; }
+    .req-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-grey); }
+    .req-list li { margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
+    .req-list i { margin-top: 3px; color: var(--line-green); }
+
     .right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-    
-    /* โครงสร้างสำหรับการจัดหน้า PDF */
     .pdf-container { background: #fff; border-radius: 12px; display: flex; flex-direction: column; gap: 20px; padding: 0; }
     .pdf-export-mode { padding: 25px !important; background: #fff !important; }
-
-    /* ตั้งค่าไม่ให้ตัดเนื้อหาขาดครึ่งหน้าเวลาขึ้นหน้า 2 ของ PDF */
-    .plan-card, .coverage-table-container, .timeline-section, .agent-card-right {
-        page-break-inside: avoid; 
-    }
+    .plan-card, .coverage-table-container, .timeline-section, .agent-card-right { page-break-inside: avoid; }
 
     .header-right { display: flex; justify-content: space-between; align-items: center; }
     .header-right h2 { font-size: 22px; margin: 0; color: var(--text-dark); }
-
-    .plan-card {
-        background: white; border: 2px solid var(--primary); border-radius: 12px; padding: 25px;
-        box-shadow: 0 4px 15px rgba(232, 102, 20, 0.1);
-    }
+    .plan-card { background: white; border: 2px solid var(--primary); border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(232, 102, 20, 0.1); }
     .plan-header { display: flex; justify-content: space-between; align-items: flex-start; }
     .plan-title h3 { margin: 0; font-size: 20px; color: var(--text-dark); }
     .plan-title p { margin: 5px 0 0 0; font-size: 14px; color: var(--text-grey); background: var(--bg-color); padding: 4px 10px; border-radius: 6px; display: inline-block; font-weight: 500;}
-
     .plan-price-display { text-align: right; }
     .price-label { font-size: 14px; color: var(--text-grey); margin-bottom: 5px;}
     .price-amount { font-size: 34px; font-weight: 700; color: var(--primary); }
-    .price-unit { font-size: 16px; font-weight: 400; }
-
+    
     .plan-details { margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 20px; }
     .detail-row { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 8px; color: var(--text-dark); align-items: center;}
     .detail-val { font-weight: 600; color: var(--text-dark); text-align: right; font-size: 16px; }
     .breakdown-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-grey); margin-bottom: 15px; padding-left: 15px;}
-    
-    .action-buttons { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
-    .btn-buy {
-        width: 100%; background: var(--line-green); color: white; border: none; padding: 14px; font-size: 16px;
-        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s;
-        display: flex; justify-content: center; align-items: center; gap: 8px;
-    }
-    .btn-buy:hover { background: #05a044; }
-    
-    .btn-pdf {
-        width: 100%; background: #333; color: white; border: none; padding: 14px; font-size: 16px;
-        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s;
-        display: flex; justify-content: center; align-items: center; gap: 8px;
-    }
-    .btn-pdf:hover { background: #1a1a1a; }
 
-    /* --- COVERAGE TABLE --- */
-    .coverage-table-container {
-        background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid var(--border-color);
-    }
+    .action-buttons { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .btn-buy, .btn-pdf, .btn-brochure { width: 100%; border: none; padding: 14px; font-size: 16px; font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; text-decoration: none; box-sizing: border-box; color: white;}
+    .btn-buy { background: var(--line-green); } .btn-buy:hover { background: #05a044; }
+    .btn-brochure { background: var(--primary); } .btn-brochure:hover { background: #cc5a11; }
+    .btn-pdf { background: #333; } .btn-pdf:hover { background: #1a1a1a; }
+
+    .coverage-table-container { background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid var(--border-color); }
     .coverage-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .coverage-table th, .coverage-table td { padding: 12px 20px; text-align: right; border-bottom: 1px solid var(--border-color); color: var(--text-dark); }
     .coverage-table td:first-child { text-align: left; width: 65%; color: var(--text-dark); font-weight: 400; }
@@ -171,50 +103,29 @@
     .table-section { background-color: #f9f3ea !important; font-size: 15px; border-bottom: 1px solid var(--border-color); }
     .table-section td { text-align: left !important; padding: 14px 20px !important; }
     .table-section .section-title { color: #000000; font-weight: 700; } 
-    .table-section i { color: var(--primary); margin-right: 8px; font-size: 16px; }
 
-    /* --- TIMELINE (WAITING PERIOD) --- */
-    .timeline-section {
-        background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); padding: 25px;
-    }
+    .timeline-section { background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); padding: 25px; }
     .timeline-section h3 { margin: 0 0 20px 0; color: var(--text-dark); font-size: 18px; text-align: center; }
-    .timeline {
-        position: relative; padding-left: 30px; margin: 0 auto; max-width: 500px;
-    }
-    .timeline::before {
-        content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 4px; background: #ffe4d1; border-radius: 4px;
-    }
+    .timeline { position: relative; padding-left: 30px; margin: 0 auto; max-width: 500px; }
+    .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 4px; background: #ffe4d1; border-radius: 4px; }
     .tl-item { position: relative; margin-bottom: 25px; }
     .tl-item:last-child { margin-bottom: 0; }
-    .tl-dot {
-        position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%;
-        background: var(--primary); border: 4px solid #fff; box-shadow: 0 0 0 2px var(--primary);
-    }
+    .tl-dot { position: absolute; left: -30px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); border: 4px solid #fff; box-shadow: 0 0 0 2px var(--primary); }
     .tl-dot.dark { background: #333; box-shadow: 0 0 0 2px #333; }
     .tl-content h4 { margin: 0 0 5px 0; font-size: 16px; color: var(--primary); }
     .tl-content h4.dark-text { color: #333; }
     .tl-content p { margin: 0; font-size: 13px; color: var(--text-grey); line-height: 1.5; }
     .tl-content p strong { color: var(--text-dark); }
 
-    /* --- AGENT CARD --- */
-    .agent-card-right {
-        background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-        display: flex; align-items: center; gap: 20px; border-left: 5px solid var(--primary);
-    }
-    .agent-profile-img {
-        width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-light); flex-shrink: 0;
-    }
+    .agent-card-right { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px; border-left: 5px solid var(--primary); }
+    .agent-profile-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-light); flex-shrink: 0; }
     .agent-info { flex: 1; }
     .agent-info h4 { margin: 0 0 5px 0; color: var(--text-dark); font-size: 18px; }
     .agent-info p { margin: 0 0 5px 0; color: var(--text-grey); font-size: 14px; }
     .agent-qr-container { text-align: center; flex-shrink: 0; }
     .agent-qr-img { width: 80px; height: 80px; border-radius: 8px; border: 1px solid var(--border-color); padding: 4px; }
 
-    /* --- STICKY BOTTOM BAR --- */
-    .sticky-bar {
-        position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-        padding: 15px 0; transform: translateY(100%); transition: transform 0.4s ease-in-out; z-index: 1000; border-top: 2px solid var(--primary);
-    }
+    .sticky-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); padding: 15px 0; transform: translateY(100%); transition: transform 0.4s ease-in-out; z-index: 1000; border-top: 2px solid var(--primary); }
     .sticky-bar.show { transform: translateY(0); }
     .sticky-content { max-width: 1100px; margin: auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
     .sticky-left { display: flex; align-items: center; gap: 15px; }
@@ -242,7 +153,6 @@
 </div>
 
 <div class="container">
-    
     <div class="left-panel">
         <div class="input-section">
             <h2>คำนวณเบี้ยประกันสุขภาพ</h2>
@@ -318,7 +228,7 @@
             </div>
             
             <div id="sum-error" style="color: red; font-size: 13px; display: none; margin-bottom: 15px;"></div>
-            
+
             <div class="requirements">
                 <h3><i class="fa-solid fa-notes-medical"></i> <span style="color: #000;">จุดเด่นแผน Precious Care</span></h3>
                 <ul class="req-list">
@@ -368,6 +278,9 @@
                     <button class="btn-buy" onclick="sendToLine()">
                         <i class="fa-brands fa-line" style="font-size: 24px;"></i> ส่งสรุปข้อมูลเข้า LINE เพื่อสอบถาม
                     </button>
+                    <a href="https://www.fwd.co.th/files/v3/assets/blt331c1aa12dcfd37a/blt36c0cfb8786a9cb3/67c00c02938bf55c6ef9b388/TH_Brochure_FWD_Precious_Protection_2025.pdf" target="_blank" class="btn-brochure">
+                        <i class="fa-solid fa-book-open" style="font-size: 20px;"></i> ดาวน์โหลดโบรชัวร์แผนประกัน
+                    </a>
                     <button class="btn-pdf" id="btn-generate-pdf" onclick="generatePDF()">
                         <i class="fa-solid fa-file-pdf" style="font-size: 20px;"></i> ดาวน์โหลดเอกสารสรุปแผน (PDF)
                     </button>
@@ -377,61 +290,23 @@
 
         <div class="coverage-table-container">
             <table class="coverage-table">
-                <tr class="table-section">
-                    <td colspan="2"><i class="fa-solid fa-bed-pulse"></i> <span class="section-title">หมวดผู้ป่วยใน (IPD)</span></td>
-                </tr>
-                <tr>
-                    <td>ผลประโยชน์สูงสุดต่อปี</td>
-                    <td id="tbl-max-limit" style="font-size: 18px;">6,000,000</td>
-                </tr>
-                <tr>
-                    <td>ค่าห้องและค่าอาหาร ค่าบริการใน รพ. (ต่อวัน)</td>
-                    <td id="tbl-room-board">6,000</td>
-                </tr>
-                <tr>
-                    <td>ค่าบริการทางการแพทย์ ผ่าตัด ตรวจวินิจฉัย</td>
-                    <td>จ่ายตามจริง</td>
-                </tr>
+                <tr class="table-section"><td colspan="2"><i class="fa-solid fa-bed-pulse"></i> <span class="section-title">หมวดผู้ป่วยใน (IPD)</span></td></tr>
+                <tr><td>ผลประโยชน์สูงสุดต่อปี</td><td id="tbl-max-limit" style="font-size: 18px;">6,000,000</td></tr>
+                <tr><td>ค่าห้องและค่าอาหาร ค่าบริการใน รพ. (ต่อวัน)</td><td id="tbl-room-board">6,000</td></tr>
+                <tr><td>ค่าบริการทางการแพทย์ ผ่าตัด ตรวจวินิจฉัย</td><td>จ่ายตามจริง</td></tr>
                 
-                <tr class="table-section">
-                    <td colspan="2"><i class="fa-solid fa-stethoscope"></i> <span class="section-title">หมวดผู้ป่วยนอก (OPD)</span></td>
-                </tr>
-                <tr>
-                    <td>ค่ารักษาพยาบาลผู้ป่วยนอก (ต่อปี)</td>
-                    <td id="tbl-opd">10,000</td>
-                </tr>
+                <tr class="table-section"><td colspan="2"><i class="fa-solid fa-stethoscope"></i> <span class="section-title">หมวดผู้ป่วยนอก (OPD)</span></td></tr>
+                <tr><td>ค่ารักษาพยาบาลผู้ป่วยนอก (ต่อปี)</td><td id="tbl-opd">10,000</td></tr>
 
-                <tr class="table-section">
-                    <td colspan="2"><i class="fa-solid fa-heart-pulse"></i> <span class="section-title">เพิ่มเติมกรณีเจ็บป่วย 3 โรคร้ายแรง*</span></td>
-                </tr>
-                <tr>
-                    <td>เงินชดเชยเมื่อป่วยด้วย 3 โรคร้ายแรง</td>
-                    <td id="tbl-ci-money">50,000</td>
-                </tr>
-                <tr>
-                    <td>ค่าห้องและค่าอาหารเพิ่มเติม (ต่อวัน)</td>
-                    <td id="tbl-ci-room">6,000</td>
-                </tr>
+                <tr class="table-section"><td colspan="2"><i class="fa-solid fa-heart-pulse"></i> <span class="section-title">เพิ่มเติมกรณีเจ็บป่วย 3 โรคร้ายแรง*</span></td></tr>
+                <tr><td>เงินชดเชยเมื่อป่วยด้วย 3 โรคร้ายแรง</td><td id="tbl-ci-money">50,000</td></tr>
+                <tr><td>ค่าห้องและค่าอาหารเพิ่มเติม (ต่อวัน)</td><td id="tbl-ci-room">6,000</td></tr>
 
-                <tr class="table-section">
-                    <td colspan="2"><i class="fa-solid fa-star"></i> <span class="section-title">ผลประโยชน์เพิ่มเติมอื่นๆ</span></td>
-                </tr>
-                <tr>
-                    <td>ค่าตรวจสุขภาพ / ฉีดวัคซีน (ต่อปี)</td>
-                    <td id="tbl-health-check">-</td>
-                </tr>
-                <tr>
-                    <td>ค่ารักษาทางทันตกรรม / สายตา (จ่ายร่วม 20%)</td>
-                    <td id="tbl-dental">-</td>
-                </tr>
-                <tr>
-                    <td>ค่ารักษาโดยแพทย์ทางเลือก</td>
-                    <td id="tbl-alt-med">-</td>
-                </tr>
-                <tr>
-                    <td>ค่าตั้งครรภ์และคลอดบุตร / จิตเวช</td>
-                    <td id="tbl-maternity">-</td>
-                </tr>
+                <tr class="table-section"><td colspan="2"><i class="fa-solid fa-star"></i> <span class="section-title">ผลประโยชน์เพิ่มเติมอื่นๆ</span></td></tr>
+                <tr><td>ค่าตรวจสุขภาพ / ฉีดวัคซีน (ต่อปี)</td><td id="tbl-health-check">-</td></tr>
+                <tr><td>ค่ารักษาทางทันตกรรม / สายตา (จ่ายร่วม 20%)</td><td id="tbl-dental">-</td></tr>
+                <tr><td>ค่ารักษาโดยแพทย์ทางเลือก</td><td id="tbl-alt-med">-</td></tr>
+                <tr><td>ค่าตั้งครรภ์และคลอดบุตร / จิตเวช</td><td id="tbl-maternity">-</td></tr>
             </table>
         </div>
 
@@ -531,25 +406,30 @@
         return 0;
     }
 
+    // โครงสร้างฐานข้อมูลที่แยกเพศและรูปแบบ Deductible เรียบร้อยแล้ว
+    // นำชุดตัวเลขทั้ง 75 ค่า มาอัปเดตทับข้อมูลด้านล่างให้สมบูรณ์ก่อนใช้งาน
+    const oldNonDeduct = {
+        bronze: [0, 0, 0, 0, 0, 42315, 41501, 40687, 39874, 39060, 25101, 24302, 23503, 22703, 21904, 21105, 20306, 19723, 19140, 18558, 17975, 17393, 17639, 17885, 18131, 18378, 18624, 18759, 18894, 19030, 19165, 19300, 19740, 20180, 20620, 21060, 21500, 21614, 21727, 21841, 21954, 22068, 22697, 23326, 23955, 24584, 25213, 25614, 26016, 26417, 26818, 27220, 29313, 31406, 33499, 35592, 37686, 39332, 40978, 42624, 44270, 45916, 50996, 56076, 61156, 66236, 71316, 80403, 89489, 98576, 107662, 116749, 124495, 132241, 139987],
+        silver: [0, 0, 0, 0, 0, 55494, 54427, 53359, 52292, 51225, 33371, 32454, 31538, 30621, 29705, 28788, 27871, 27262, 26653, 26044, 25434, 24825, 25269, 25714, 26158, 26602, 27046, 27385, 27724, 28063, 28401, 28740, 28883, 29026, 29169, 29312, 29455, 29559, 29662, 29766, 29869, 29973, 31319, 32665, 34011, 35357, 36703, 37828, 38952, 40077, 41202, 42326, 43616, 44905, 46194, 47483, 48773, 50459, 52145, 53831, 55517, 57203, 61764, 66324, 70885, 75445, 80006, 90191, 100377, 110562, 120748, 130933, 139621, 148310, 156998],
+        gold:   [0, 0, 0, 0, 0, 65177, 63924, 62670, 61417, 60164, 37973, 36989, 36005, 35022, 34038, 33054, 32070, 31474, 30878, 30282, 29686, 29090, 29483, 29876, 30269, 30662, 31055, 31436, 31816, 32197, 32577, 32958, 33185, 33412, 33639, 33866, 34093, 34190, 34287, 34384, 34482, 34579, 35925, 37272, 38618, 39965, 41311, 42573, 43835, 45096, 46358, 47620, 49104, 50589, 52074, 53558, 55043, 56941, 58838, 60736, 62833, 64531, 69704, 74877, 80051, 85224, 90397, 101882, 113367, 124853, 136338, 147823, 157763, 167703, 177643],
+        platinum:[172408, 154088, 154088, 124583, 124583, 82171, 80591, 79010, 77430, 75850, 44170, 43106, 42042, 40978, 39914, 38850, 37786, 37371, 36956, 36541, 36126, 35711, 35927, 36142, 36358, 36573, 36789, 37122, 37455, 37789, 38122, 38455, 39153, 39850, 40548, 41245, 41943, 42937, 43931, 44925, 45919, 46913, 47635, 48357, 49079, 49801, 50524, 52629, 54735, 56841, 58947, 61052, 62846, 64640, 66434, 68228, 70021, 72390, 74758, 77126, 79495, 81863, 89327, 96791, 104255, 111719, 119183, 134268, 149354, 164439, 179525, 194810, 207577, 220543, 233510],
+        sapphire:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64544, 63858, 63172, 62487, 61801, 61115, 60429, 59495, 58560, 57626, 56691, 55757, 57070, 58383, 59695, 61008, 62321, 62672, 63022, 63373, 63723, 64074, 64441, 64808, 65176, 65543, 65910, 66230, 66550, 66869, 67189, 67509, 69618, 71724, 73831, 75939, 78046, 80619, 83192, 85765, 88338, 90911, 94165, 97419, 100672, 103928, 107180, 110819, 114458, 118096, 121735, 125374, 141471, 157589, 173666, 189764, 205861, 229517, 253172, 276828, 300483, 324139, 343184, 382190, 381215],
+        diamond: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 103733, 102596, 101459, 100322, 99184, 98047, 96910, 95445, 93979, 92514, 91048, 89583, 92596, 95610, 98623, 101637, 104650, 105491, 106332, 107172, 108013, 108854, 112090, 115327, 118563, 121800, 125036, 125534, 126032, 126530, 127028, 127526, 130625, 133723, 138822, 139920, 143019, 145076, 147133, 149189, 151246, 153303, 166347, 179390, 192434, 205477, 218521, 219685, 220850, 222014, 223179, 224343, 255915, 287486, 319058, 350629, 382201, 426473, 470744, 515016, 559287, 603559, 642073, 680587, 719101]
+    };
+    const oldDeduct = {
+        bronze: [37031, 32275, 32275, 25262, 25262, 15678, 15377, 15075, 14774, 14472, 13047, 12579, 12110, 11642, 11174, 10705, 10237, 9748, 9259, 8771, 8282, 7793, 7678, 7563, 7447, 7332, 7217, 7226, 7236, 7245, 7255, 7264, 7720, 8176, 8632, 9088, 9544, 9737, 9930, 10124, 10317, 10510, 10932, 11353, 11775, 12196, 12618, 13122, 13626, 14130, 14634, 15138, 17243, 19349, 21454, 23560, 25665, 28006, 30347, 32688, 35029, 37370, 41721, 46072, 50422, 54773, 59124, 67322, 75521, 83719, 91918, 100116, 106758, 113401, 120043],
+        silver: [55155, 49207, 49207, 39750, 39750, 22000, 21577, 21154, 20730, 20307, 16389, 15906, 15423, 14940, 14456, 13973, 13490, 12870, 12250, 11629, 11009, 10389, 10312, 10235, 10159, 10082, 10005, 10092, 10179, 10267, 10354, 10441, 10953, 11465, 11978, 12490, 13002, 13093, 13184, 13275, 13366, 13457, 14408, 15359, 16311, 17262, 18213, 18887, 19560, 20234, 20907, 21581, 23898, 26216, 28533, 30851, 33168, 36163, 39157, 42152, 45146, 48141, 52415, 56689, 60964, 65238, 69512, 76715, 83919, 91122, 98326, 105529, 112685, 119841, 126997],
+        gold:   [85536, 76477, 76477, 59340, 59340, 29630, 29060, 28490, 27920, 27351, 17716, 17405, 17093, 16782, 16471, 16159, 15848, 15011, 14174, 13338, 12501, 11664, 11685, 11707, 11728, 11750, 11771, 11935, 12098, 12262, 12425, 12589, 12810, 13032, 13253, 13475, 13696, 13806, 13916, 14025, 14135, 14245, 15517, 16790, 18062, 19335, 20607, 21637, 22667, 23697, 24727, 25757, 28181, 30604, 33028, 35451, 37875, 41357, 44840, 48322, 51805, 55287, 59475, 63663, 67851, 72039, 76227, 84309, 92391, 100472, 108554, 116636, 124654, 132672, 140689],
+        platinum:[108889, 94213, 94213, 72815, 72815, 36537, 35835, 35132, 34429, 33727, 21269, 20631, 19992, 19354, 18715, 18077, 17438, 16885, 16332, 15780, 15227, 14674, 14318, 13962, 13606, 13250, 12894, 12906, 12918, 12929, 12941, 12953, 13386, 13819, 14251, 14684, 15117, 16137, 17157, 18176, 19196, 20216, 20904, 21592, 22280, 22968, 23656, 25359, 27062, 28764, 30467, 32170, 34841, 37512, 40182, 42853, 45524, 49376, 53226, 57077, 60928, 64779, 71057, 77334, 83612, 89889, 96167, 109592, 123016, 136441, 149865, 163290, 174170, 185050, 195929],
+        sapphire:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41473, 40888, 40304, 39719, 39134, 38550, 37965, 37540, 37115, 36689, 36264, 35839, 36111, 36383, 36656, 36928, 37200, 37213, 37227, 37240, 37254, 37267, 37348, 37429, 37511, 37592, 37673, 38142, 38611, 39079, 39548, 40017, 41685, 43354, 45022, 46691, 48359, 50843, 53327, 55811, 58296, 60779, 63751, 66723, 69694, 72666, 75638, 80626, 85613, 90601, 95588, 100576, 113630, 126683, 139737, 152790, 165844, 186682, 207520, 228359, 249197, 270035, 285885, 301735, 317584],
+        diamond: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48676, 47945, 47213, 46482, 45751, 45019, 44288, 43628, 42967, 42307, 41646, 40986, 41136, 41286, 41435, 41584, 41734, 41736, 41737, 41739, 41740, 41742, 42018, 42294, 42569, 42845, 43121, 44501, 45881, 47260, 48640, 50020, 51574, 53127, 54681, 56234, 57788, 61012, 64236, 67460, 70684, 73908, 77769, 81631, 85492, 89354, 93215, 99669, 108124, 112578, 119033, 125487, 142418, 159349, 176281, 193212, 210143, 237162, 264181, 291200, 318219, 345238, 369002, 392766, 416529]
+    };
+
     const rateDB = {
         baseM: [9.62, 9.78, 9.94, 10.12, 10.30, 10.49, 10.68, 10.89, 11.11, 11.34, 11.58, 11.82, 12.07, 12.33, 12.59, 12.86, 13.13, 13.42, 13.71, 14.00, 14.31, 14.64, 14.98, 15.33, 15.70, 16.09, 16.49, 16.92, 17.37, 17.85, 18.34, 18.87, 19.41, 19.99, 20.60, 21.23, 21.90, 22.61, 23.35, 24.13, 24.95, 25.82, 26.74, 27.71, 28.74, 29.82, 30.97, 32.18, 33.47, 34.84, 36.30, 37.84, 39.50, 41.26, 43.14, 45.16, 47.33, 49.65, 52.15, 54.84, 57.74, 60.86, 64.22, 67.85, 71.78, 76.02, 80.61, 85.58, 90.97, 96.80, 103.10, 109.90, 117.23, 125.12, 133.59],
         baseF: [8.59, 8.71, 8.83, 8.96, 9.10, 9.24, 9.38, 9.53, 9.69, 9.86, 10.03, 10.20, 10.39, 10.58, 10.78, 10.99, 11.20, 11.43, 11.67, 11.91, 12.17, 12.43, 12.71, 13.00, 13.31, 13.63, 13.96, 14.31, 14.68, 15.07, 15.47, 15.90, 16.34, 16.81, 17.31, 17.83, 18.37, 18.95, 19.55, 20.19, 20.86, 21.57, 22.32, 23.11, 23.95, 24.84, 25.77, 26.77, 27.83, 28.96, 30.15, 31.43, 32.80, 34.25, 35.81, 37.48, 39.27, 41.19, 43.26, 45.49, 47.89, 50.48, 53.29, 56.34, 59.64, 63.23, 67.13, 71.36, 75.96, 80.95, 86.36, 92.21, 98.53, 105.35, 112.72],
-        nonDeduct: {
-            bronze: [0, 0, 0, 0, 0, 42315, 41501, 40687, 39874, 39060, 25101, 24302, 23503, 22703, 21904, 21105, 20306, 19723, 19140, 18558, 17975, 17393, 17639, 17885, 18131, 18378, 18624, 18759, 18894, 19030, 19165, 19300, 19740, 20180, 20620, 21060, 21500, 21614, 21727, 21841, 21954, 22068, 22697, 23326, 23955, 24584, 25213, 25614, 26016, 26417, 26818, 27220, 29313, 31406, 33499, 35592, 37686, 39332, 40978, 42624, 44270, 45916, 50996, 56076, 61156, 66236, 71316, 80403, 89489, 98576, 107662, 116749, 124495, 132241, 139987],
-            silver: [0, 0, 0, 0, 0, 55494, 54427, 53359, 52292, 51225, 33371, 32454, 31538, 30621, 29705, 28788, 27871, 27262, 26653, 26044, 25434, 24825, 25269, 25714, 26158, 26602, 27046, 27385, 27724, 28063, 28401, 28740, 28883, 29026, 29169, 29312, 29455, 29559, 29662, 29766, 29869, 29973, 31319, 32665, 34011, 35357, 36703, 37828, 38952, 40077, 41202, 42326, 43616, 44905, 46194, 47483, 48773, 50459, 52145, 53831, 55517, 57203, 61764, 66324, 70885, 75445, 80006, 90191, 100377, 110562, 120748, 130933, 139621, 148310, 156998],
-            gold:   [0, 0, 0, 0, 0, 65177, 63924, 62670, 61417, 60164, 37973, 36989, 36005, 35022, 34038, 33054, 32070, 31474, 30878, 30282, 29686, 29090, 29483, 29876, 30269, 30662, 31055, 31436, 31816, 32197, 32577, 32958, 33185, 33412, 33639, 33866, 34093, 34190, 34287, 34384, 34482, 34579, 35925, 37272, 38618, 39965, 41311, 42573, 43835, 45096, 46358, 47620, 49104, 50589, 52074, 53558, 55043, 56941, 58838, 60736, 62833, 64531, 69704, 74877, 80051, 85224, 90397, 101882, 113367, 124853, 136338, 147823, 157763, 167703, 177643],
-            platinum:[172408, 154088, 154088, 124583, 124583, 82171, 80591, 79010, 77430, 75850, 44170, 43106, 42042, 40978, 39914, 38850, 37786, 37371, 36956, 36541, 36126, 35711, 35927, 36142, 36358, 36573, 36789, 37122, 37455, 37789, 38122, 38455, 39153, 39850, 40548, 41245, 41943, 42937, 43931, 44925, 45919, 46913, 47635, 48357, 49079, 49801, 50524, 52629, 54735, 56841, 58947, 61052, 62846, 64640, 66434, 68228, 70021, 72390, 74758, 77126, 79495, 81863, 89327, 96791, 104255, 111719, 119183, 134268, 149354, 164439, 179525, 194810, 207577, 220543, 233510],
-            sapphire:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64544, 63858, 63172, 62487, 61801, 61115, 60429, 59495, 58560, 57626, 56691, 55757, 57070, 58383, 59695, 61008, 62321, 62672, 63022, 63373, 63723, 64074, 64441, 64808, 65176, 65543, 65910, 66230, 66550, 66869, 67189, 67509, 69618, 71724, 73831, 75939, 78046, 80619, 83192, 85765, 88338, 90911, 94165, 97419, 100672, 103928, 107180, 110819, 114458, 118096, 121735, 125374, 141471, 157589, 173666, 189764, 205861, 229517, 253172, 276828, 300483, 324139, 343184, 382190, 381215],
-            diamond: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 103733, 102596, 101459, 100322, 99184, 98047, 96910, 95445, 93979, 92514, 91048, 89583, 92596, 95610, 98623, 101637, 104650, 105491, 106332, 107172, 108013, 108854, 112090, 115327, 118563, 121800, 125036, 125534, 126032, 126530, 127028, 127526, 130625, 133723, 138822, 139920, 143019, 145076, 147133, 149189, 151246, 153303, 166347, 179390, 192434, 205477, 218521, 219685, 220850, 222014, 223179, 224343, 255915, 287486, 319058, 350629, 382201, 426473, 470744, 515016, 559287, 603559, 642073, 680587, 719101]
-        },
-        deduct: {
-            bronze: [37031, 32275, 32275, 25262, 25262, 15678, 15377, 15075, 14774, 14472, 13047, 12579, 12110, 11642, 11174, 10705, 10237, 9748, 9259, 8771, 8282, 7793, 7678, 7563, 7447, 7332, 7217, 7226, 7236, 7245, 7255, 7264, 7720, 8176, 8632, 9088, 9544, 9737, 9930, 10124, 10317, 10510, 10932, 11353, 11775, 12196, 12618, 13122, 13626, 14130, 14634, 15138, 17243, 19349, 21454, 23560, 25665, 28006, 30347, 32688, 35029, 37370, 41721, 46072, 50422, 54773, 59124, 67322, 75521, 83719, 91918, 100116, 106758, 113401, 120043],
-            silver: [55155, 49207, 49207, 39750, 39750, 22000, 21577, 21154, 20730, 20307, 16389, 15906, 15423, 14940, 14456, 13973, 13490, 12870, 12250, 11629, 11009, 10389, 10312, 10235, 10159, 10082, 10005, 10092, 10179, 10267, 10354, 10441, 10953, 11465, 11978, 12490, 13002, 13093, 13184, 13275, 13366, 13457, 14408, 15359, 16311, 17262, 18213, 18887, 19560, 20234, 20907, 21581, 23898, 26216, 28533, 30851, 33168, 36163, 39157, 42152, 45146, 48141, 52415, 56689, 60964, 65238, 69512, 76715, 83919, 91122, 98326, 105529, 112685, 119841, 126997],
-            gold:   [85536, 76477, 76477, 59340, 59340, 29630, 29060, 28490, 27920, 27351, 17716, 17405, 17093, 16782, 16471, 16159, 15848, 15011, 14174, 13338, 12501, 11664, 11685, 11707, 11728, 11750, 11771, 11935, 12098, 12262, 12425, 12589, 12810, 13032, 13253, 13475, 13696, 13806, 13916, 14025, 14135, 14245, 15517, 16790, 18062, 19335, 20607, 21637, 22667, 23697, 24727, 25757, 28181, 30604, 33028, 35451, 37875, 41357, 44840, 48322, 51805, 55287, 59475, 63663, 67851, 72039, 76227, 84309, 92391, 100472, 108554, 116636, 124654, 132672, 140689],
-            platinum:[108889, 94213, 94213, 72815, 72815, 36537, 35835, 35132, 34429, 33727, 21269, 20631, 19992, 19354, 18715, 18077, 17438, 16885, 16332, 15780, 15227, 14674, 14318, 13962, 13606, 13250, 12894, 12906, 12918, 12929, 12941, 12953, 13386, 13819, 14251, 14684, 15117, 16137, 17157, 18176, 19196, 20216, 20904, 21592, 22280, 22968, 23656, 25359, 27062, 28764, 30467, 32170, 34841, 37512, 40182, 42853, 45524, 49376, 53226, 57077, 60928, 64779, 71057, 77334, 83612, 89889, 96167, 109592, 123016, 136441, 149865, 163290, 174170, 185050, 195929],
-            sapphire:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41473, 40888, 40304, 39719, 39134, 38550, 37965, 37540, 37115, 36689, 36264, 35839, 36111, 36383, 36656, 36928, 37200, 37213, 37227, 37240, 37254, 37267, 37348, 37429, 37511, 37592, 37673, 38142, 38611, 39079, 39548, 40017, 41685, 43354, 45022, 46691, 48359, 50843, 53327, 55811, 58296, 60779, 63751, 66723, 69694, 72666, 75638, 80626, 85613, 90601, 95588, 100576, 113630, 126683, 139737, 152790, 165844, 186682, 207520, 228359, 249197, 270035, 285885, 301735, 317584],
-            diamond: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48676, 47945, 47213, 46482, 45751, 45019, 44288, 43628, 42967, 42307, 41646, 40986, 41136, 41286, 41435, 41584, 41734, 41736, 41737, 41739, 41740, 41742, 42018, 42294, 42569, 42845, 43121, 44501, 45881, 47260, 48640, 50020, 51574, 53127, 54681, 56234, 57788, 61012, 64236, 67460, 70684, 73908, 77769, 81631, 85492, 89354, 93215, 99669, 108124, 112578, 119033, 125487, 142418, 159349, 176281, 193212, 210143, 237162, 264181, 291200, 318219, 345238, 369002, 392766, 416529]
-        }
+        nonDeduct: { male: oldNonDeduct, female: oldNonDeduct },
+        deduct: { male: oldDeduct, female: oldDeduct }
     };
 
     let currentGender = 'male';
@@ -557,33 +437,19 @@
     let isDeductible = false;
     let currentOccClass = 1;
 
-    function formatNumber(num) { 
-        if(typeof num === 'string') return num;
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
-    }
+    function formatNumber(num) { return typeof num === 'string' ? num : num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
     function calculateExperience() {
-        let startDate = new Date(2006, 5, 28);
-        let today = new Date();
-        let years = today.getFullYear() - startDate.getFullYear();
-        let months = today.getMonth() - startDate.getMonth();
-        let days = today.getDate() - startDate.getDate();
-
-        if (days < 0) { months--; }
-        if (months < 0) { years--; months += 12; }
-
-        let expText = "";
-        if (years > 0) expText += years + " ปี ";
-        if (months > 0) expText += months + " เดือน";
-        if (expText === "") expText = "0 เดือน"; 
-
+        let startDate = new Date(2006, 5, 28); let today = new Date();
+        let years = today.getFullYear() - startDate.getFullYear(); let months = today.getMonth() - startDate.getMonth(); let days = today.getDate() - startDate.getDate();
+        if (days < 0) { months--; } if (months < 0) { years--; months += 12; }
+        let expText = ""; if (years > 0) expText += years + " ปี "; if (months > 0) expText += months + " เดือน"; if (expText === "") expText = "0 เดือน"; 
         document.getElementById('experience-text').innerText = expText.trim();
     }
 
     function setGender(gender) {
         currentGender = gender;
-        document.getElementById('btn-male').classList.remove('active');
-        document.getElementById('btn-female').classList.remove('active');
+        document.getElementById('btn-male').classList.remove('active'); document.getElementById('btn-female').classList.remove('active');
         document.getElementById(`btn-${gender}`).classList.add('active');
         document.getElementById('sticky-gender-text').innerText = (gender === 'male') ? 'ชาย' : 'หญิง';
         calculate();
@@ -591,28 +457,20 @@
 
     function setDeductible(state) {
         isDeductible = state;
-        document.getElementById('btn-nondeduct').classList.remove('active');
-        document.getElementById('btn-deduct').classList.remove('active');
-        
+        document.getElementById('btn-nondeduct').classList.remove('active'); document.getElementById('btn-deduct').classList.remove('active');
         if(state) {
-            document.getElementById('btn-deduct').classList.add('active');
-            document.getElementById('deduct-display').style.display = 'flex';
+            document.getElementById('btn-deduct').classList.add('active'); document.getElementById('deduct-display').style.display = 'flex';
         } else {
-            document.getElementById('btn-nondeduct').classList.add('active');
-            document.getElementById('deduct-display').style.display = 'none';
+            document.getElementById('btn-nondeduct').classList.add('active'); document.getElementById('deduct-display').style.display = 'none';
         }
         calculate();
     }
 
     function setOccClass(occ) {
         currentOccClass = occ;
-        document.getElementById('btn-occ-1').classList.remove('active');
-        document.getElementById('btn-occ-3').classList.remove('active');
-        document.getElementById('btn-occ-4').classList.remove('active');
+        document.getElementById('btn-occ-1').classList.remove('active'); document.getElementById('btn-occ-3').classList.remove('active'); document.getElementById('btn-occ-4').classList.remove('active');
         document.getElementById(`btn-occ-${occ}`).classList.add('active');
-        
-        let occStr = occ === 1 ? '1-2' : occ;
-        document.getElementById('sticky-occ-text').innerText = occStr;
+        document.getElementById('sticky-occ-text').innerText = occ === 1 ? '1-2' : occ;
         calculate();
     }
 
@@ -631,10 +489,8 @@
         let minAgeAllowed = isDeductible ? planInfo.minAgeDeduct : planInfo.minAgeNonDeduct;
         
         if (age < minAgeAllowed || age > 75) {
-            sumError.innerText = `*แผน ${planInfo.name} (${isDeductible ? 'แบบมีส่วนร่วมจ่าย' : 'เหมาจ่ายตั้งแต่บาทแรก'}) รับประกันสำหรับผู้ที่มีอายุ ${minAgeAllowed} - 75 ปี เท่านั้น`;
-            sumError.style.display = 'block';
-            resetDisplay();
-            return;
+            sumError.innerText = `*แผน ${planInfo.name} (${isDeductible ? 'แบบมีส่วนร่วมจ่าย' : 'เหมาจ่ายตั้งแต่บาทแรก'}) รับประกันอายุ ${minAgeAllowed} - 75 ปี เท่านั้น`;
+            sumError.style.display = 'block'; resetDisplay(); return;
         } else {
             sumError.style.display = 'none';
         }
@@ -649,35 +505,26 @@
         document.getElementById('sticky-plan-text').innerText = `แผน ${planInfo.name} ${deductText}`;
         document.getElementById('display-deduct-amount').innerText = formatNumber(actualDeduct);
 
-        document.getElementById('tbl-max-limit').innerText = typeof planInfo.limit === 'number' ? formatNumber(planInfo.limit) : planInfo.limit;
-        document.getElementById('tbl-room-board').innerText = typeof planInfo.room === 'number' ? formatNumber(planInfo.room) : planInfo.room;
-        document.getElementById('tbl-opd').innerText = typeof planInfo.opd === 'number' ? formatNumber(planInfo.opd) : planInfo.opd;
-        document.getElementById('tbl-ci-money').innerText = typeof planInfo.ciMoney === 'number' ? formatNumber(planInfo.ciMoney) : planInfo.ciMoney;
-        document.getElementById('tbl-ci-room').innerText = typeof planInfo.ciRoom === 'number' ? formatNumber(planInfo.ciRoom) : planInfo.ciRoom;
-        document.getElementById('tbl-health-check').innerText = typeof planInfo.healthCheck === 'number' ? formatNumber(planInfo.healthCheck) : planInfo.healthCheck;
-        document.getElementById('tbl-dental').innerText = typeof planInfo.dental === 'number' ? formatNumber(planInfo.dental) : planInfo.dental;
-        document.getElementById('tbl-alt-med').innerText = typeof planInfo.altMed === 'number' ? formatNumber(planInfo.altMed) : planInfo.altMed;
-        document.getElementById('tbl-maternity').innerText = typeof planInfo.maternity === 'number' ? formatNumber(planInfo.maternity) : planInfo.maternity;
+        document.getElementById('tbl-max-limit').innerText = formatNumber(planInfo.limit);
+        document.getElementById('tbl-room-board').innerText = formatNumber(planInfo.room);
+        document.getElementById('tbl-opd').innerText = formatNumber(planInfo.opd);
+        document.getElementById('tbl-ci-money').innerText = formatNumber(planInfo.ciMoney);
+        document.getElementById('tbl-ci-room').innerText = formatNumber(planInfo.ciRoom);
 
         let rateMainArray = currentGender === 'male' ? rateDB.baseM : rateDB.baseF;
         let mainRateVal = rateMainArray[age - 1]; 
         let premiumMain = Math.ceil((mainRateVal * 60000) / 1000);
 
-        let riderDbRef = isDeductible ? rateDB.deduct[currentPlanId] : rateDB.nonDeduct[currentPlanId];
-        let basePremiumRider = riderDbRef[age - 1];
+        let riderGroup = isDeductible ? rateDB.deduct : rateDB.nonDeduct;
+        let riderDbRef = riderGroup[currentGender][currentPlanId];
+        let basePremiumRider = riderDbRef ? riderDbRef[age - 1] : undefined;
         
-        if (basePremiumRider === 0) {
+        if (basePremiumRider === undefined || basePremiumRider === 0) {
             sumError.innerText = "* แผนความคุ้มครองนี้ ไม่เปิดรับประกันในช่วงอายุที่คุณเลือก กรุณาเปลี่ยนแผน";
-            sumError.style.display = 'block';
-            resetDisplay();
-            return;
+            sumError.style.display = 'block'; resetDisplay(); return;
         }
 
-        let occMultiplier = 1.0;
-        if (currentOccClass === 3) occMultiplier = 1.30;
-        if (currentOccClass === 4) occMultiplier = 1.45;
-
-        let premiumRider = Math.round(basePremiumRider * occMultiplier);
+        let premiumRider = basePremiumRider; 
         let totalPremium = premiumMain + premiumRider;
 
         document.getElementById('main-price').innerText = formatNumber(premiumMain) + " บาท";
@@ -687,82 +534,50 @@
     }
 
     function resetDisplay() {
-        document.getElementById('main-price').innerText = "- บาท";
-        document.getElementById('rider-price').innerText = "- บาท";
-        document.getElementById('total-price').innerText = "-";
-        document.getElementById('sticky-price-amount').innerText = "-";
+        document.getElementById('main-price').innerText = "- บาท"; document.getElementById('rider-price').innerText = "- บาท";
+        document.getElementById('total-price').innerText = "-"; document.getElementById('sticky-price-amount').innerText = "-";
     }
 
     function sendToLine() {
-        let age = document.getElementById('age-input').value;
-        let price = document.getElementById('sticky-price-amount').innerText;
+        let age = document.getElementById('age-input').value; let price = document.getElementById('sticky-price-amount').innerText;
         if(price === '-' || price === '0') { alert("กรุณาตรวจสอบอายุหรือแผนให้ถูกต้อง"); return; }
 
-        let planInfo = planDetails[currentPlanId];
-        let actualDeduct = getDynamicDeductAmount(currentPlanId, parseInt(age));
+        let planInfo = planDetails[currentPlanId]; let actualDeduct = getDynamicDeductAmount(currentPlanId, parseInt(age));
         let typeStr = isDeductible ? `มีส่วนร่วมจ่าย (${formatNumber(actualDeduct)} บ.)` : `ไม่มีความรับผิดส่วนแรก`;
         let occStr = currentOccClass === 1 ? '1-2' : currentOccClass;
         
         let msg = `สอบถามแผน FWD Precious Care\nเพศ: ${currentGender==='male'?'ชาย':'หญิง'}\nอายุ: ${age} ปี\nขั้นอาชีพ: ${occStr}\nเลือกแผน: ${planInfo.name}\nรูปแบบ: ${typeStr}\nเบี้ยรวมประมาณ: ${price} บาท/ปี`;
-        let url = "https://line.me/R/oaMessage/@toifwd/?" + encodeURIComponent(msg);
-        window.open(url, '_blank');
+        window.open("https://line.me/R/oaMessage/@toifwd/?" + encodeURIComponent(msg), '_blank');
     }
 
     function generatePDF() {
-        let age = document.getElementById('age-input').value;
-        let price = document.getElementById('sticky-price-amount').innerText;
+        let age = document.getElementById('age-input').value; let price = document.getElementById('sticky-price-amount').innerText;
         if(price === '-' || price === '0') { alert("กรุณาตรวจสอบอายุหรือแผนให้ถูกต้องก่อนดาวน์โหลด"); return; }
 
         const element = document.getElementById('pdf-content');
-        
         const elementsToHide = element.querySelectorAll('.hide-on-pdf');
-        elementsToHide.forEach(el => el.style.display = 'none');
-        element.classList.add('pdf-export-mode');
+        elementsToHide.forEach(el => el.style.display = 'none'); element.classList.add('pdf-export-mode');
 
-        const btn = document.getElementById('btn-generate-pdf');
-        const originalText = btn.innerHTML;
+        const btn = document.getElementById('btn-generate-pdf'); const originalText = btn.innerHTML;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังเตรียมเอกสาร...';
 
-        const planName = planDetails[currentPlanId].name;
-        const genderStr = currentGender === 'male' ? 'ชาย' : 'หญิง';
+        const planName = planDetails[currentPlanId].name; const genderStr = currentGender === 'male' ? 'ชาย' : 'หญิง';
         const typeStr = isDeductible ? 'Deductible' : 'NonDeduct';
         const fileName = `สรุปแผน_FWD_PreciousCare_${planName}_${typeStr}_อายุ${age}ปี.pdf`;
 
-        const opt = {
-            margin:       [15, 10, 15, 10], 
-            filename:     fileName,
-            image:        { type: 'jpeg', quality: 1.0 },
-            html2canvas:  { 
-                scale: 3, 
-                useCORS: true, 
-                scrollY: 0,
-                windowWidth: 800 
-            },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+        const opt = { margin: [15, 10, 15, 10], filename: fileName, image: { type: 'jpeg', quality: 1.0 }, html2canvas: { scale: 3, useCORS: true, scrollY: 0, windowWidth: 800 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
 
         setTimeout(() => {
             html2pdf().set(opt).from(element).save().then(() => {
-                elementsToHide.forEach(el => {
-                    if(el.classList.contains('action-buttons') || el.classList.contains('header-right')) {
-                        el.style.display = 'flex';
-                    } else {
-                        el.style.display = 'block';
-                    }
-                });
-                element.classList.remove('pdf-export-mode');
-                btn.innerHTML = originalText;
+                elementsToHide.forEach(el => { el.style.display = (el.classList.contains('action-buttons') || el.classList.contains('header-right')) ? 'flex' : 'block'; });
+                element.classList.remove('pdf-export-mode'); btn.innerHTML = originalText;
             });
         }, 500); 
     }
 
-    window.addEventListener('scroll', () => {
-        let stickyBar = document.getElementById('sticky-bar');
-        if (window.scrollY > 300) { stickyBar.classList.add('show'); } else { stickyBar.classList.remove('show'); }
-    });
+    window.addEventListener('scroll', () => { let stickyBar = document.getElementById('sticky-bar'); if (window.scrollY > 300) { stickyBar.classList.add('show'); } else { stickyBar.classList.remove('show'); } });
 
-    calculateExperience();
-    calculate(); 
+    calculateExperience(); calculate(); 
 </script>
 
 </body>
