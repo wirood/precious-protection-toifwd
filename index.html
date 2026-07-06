@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
     :root {
         --primary: #e86614; 
@@ -133,6 +134,9 @@
     .right-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
     .header-right { display: flex; justify-content: space-between; align-items: center; }
     .header-right h2 { font-size: 22px; margin: 0; color: var(--text-dark); }
+    
+    /* สำหรับการปรินท์เป็นเอกสาร เราใส่คลาส pdf-container เพื่อให้พื้นหลังเป็นสีขาวล้วนตอนเซฟ */
+    .pdf-container { background: #fcf9f5; display: flex; flex-direction: column; gap: 20px;}
 
     .plan-card {
         background: white; border: 2px solid var(--primary); border-radius: 12px; padding: 25px;
@@ -158,6 +162,13 @@
         display: flex; justify-content: center; align-items: center; gap: 8px;
     }
     .btn-buy:hover { background: #05a044; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(6, 199, 85, 0.2); }
+    
+    .btn-pdf {
+        width: 100%; background: #333333; color: white; border: none; padding: 16px; font-size: 16px;
+        font-family: 'Prompt'; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 10px; transition: 0.2s;
+        display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+    .btn-pdf:hover { background: #1a1a1a; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); }
 
     /* --- VIDEO TIKTOK CONTAINER --- */
     .video-card {
@@ -336,8 +347,9 @@
         </div>
     </div>
 
-    <div class="right-panel">
-        <div class="header-right">
+    <div class="right-panel pdf-container" id="pdf-content">
+        
+        <div class="header-right hide-on-pdf">
             <h2>สรุปแผนความคุ้มครอง</h2>
         </div>
 
@@ -369,13 +381,18 @@
                 </div>
                 <div class="breakdown-row">ความคุ้มครองสูงสุด <span id="display-rider-sum">6,000,000</span> บาท/ปี</div>
 
-                <button class="btn-buy" onclick="sendToLine()">
-                    <i class="fa-brands fa-line" style="font-size: 24px;"></i> ส่งสรุปข้อมูลเข้า LINE เพื่อสอบถาม
-                </button>
+                <div class="action-buttons hide-on-pdf">
+                    <button class="btn-buy" onclick="sendToLine()">
+                        <i class="fa-brands fa-line" style="font-size: 24px;"></i> ส่งสรุปข้อมูลเข้า LINE เพื่อสอบถาม
+                    </button>
+                    <button class="btn-pdf" id="btn-generate-pdf" onclick="generatePDF()">
+                        <i class="fa-solid fa-file-pdf" style="font-size: 20px;"></i> ดาวน์โหลดเอกสารสรุปแผน (PDF)
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="video-card">
+        <div class="video-card hide-on-pdf">
             <h3><i class="fa-brands fa-tiktok" style="color: #000;"></i> ทำความรู้จักแผน FWD Precious Care</h3>
             <div class="tiktok-wrapper">
                 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@toifwd/video/7414088266082684167" data-video-id="7414088266082684167" style="max-width: 605px; min-width: 325px; margin: 0;">
@@ -492,7 +509,7 @@
         'diamond': { name: 'Diamond', limit: 100000000, room: 25000, opd: 'จ่ายตามจริง', ciMoney: 100000, ciRoom: 25000, dental: 15000, healthCheck: 15000, altMed: 20000, maternity: 200000, deductAmount: 100000 }
     };
 
-    // ฐานข้อมูลเบี้ยประกัน รายอายุ 1 - 75 ปี อ้างอิงจากตาราง PDF (Array Index 0 = อายุ 1 ปี)
+    // ฐานข้อมูลเบี้ยประกัน รายอายุ 1 - 75 ปี (Array Index 0 = อายุ 1 ปี)
     const rateDB = {
         baseM: [9.62, 9.78, 9.94, 10.12, 10.30, 10.49, 10.68, 10.89, 11.11, 11.34, 11.58, 11.82, 12.07, 12.33, 12.59, 12.86, 13.13, 13.42, 13.71, 14.00, 14.31, 14.64, 14.98, 15.33, 15.70, 16.09, 16.49, 16.92, 17.37, 17.85, 18.34, 18.87, 19.41, 19.99, 20.60, 21.23, 21.90, 22.61, 23.35, 24.13, 24.95, 25.82, 26.74, 27.71, 28.74, 29.82, 30.97, 32.18, 33.47, 34.84, 36.30, 37.84, 39.50, 41.26, 43.14, 45.16, 47.33, 49.65, 52.15, 54.84, 57.74, 60.86, 64.22, 67.85, 71.78, 76.02, 80.61, 85.58, 90.97, 96.80, 103.10, 109.90, 117.23, 125.12, 133.59],
         baseF: [8.59, 8.71, 8.83, 8.96, 9.10, 9.24, 9.38, 9.53, 9.69, 9.86, 10.03, 10.20, 10.39, 10.58, 10.78, 10.99, 11.20, 11.43, 11.67, 11.91, 12.17, 12.43, 12.71, 13.00, 13.31, 13.63, 13.96, 14.31, 14.68, 15.07, 15.47, 15.90, 16.34, 16.81, 17.31, 17.83, 18.37, 18.95, 19.55, 20.19, 20.86, 21.57, 22.32, 23.11, 23.95, 24.84, 25.77, 26.77, 27.83, 28.96, 30.15, 31.43, 32.80, 34.25, 35.81, 37.48, 39.27, 41.19, 43.26, 45.49, 47.89, 50.48, 53.29, 56.34, 59.64, 63.23, 67.13, 71.36, 75.96, 80.95, 86.36, 92.21, 98.53, 105.35, 112.72],
@@ -677,6 +694,57 @@
         let msg = `สอบถามแผน FWD Precious Care\nเพศ: ${currentGender==='male'?'ชาย':'หญิง'}\nอายุ: ${age} ปี\nขั้นอาชีพ: ${occStr}\nเลือกแผน: ${planInfo.name}\nรูปแบบ: ${typeStr}\nเบี้ยรวมประมาณ: ${price} บาท/ปี`;
         let url = "https://line.me/R/oaMessage/@toifwd/?" + encodeURIComponent(msg);
         window.open(url, '_blank');
+    }
+
+    // ฟังก์ชันสำหรับ สร้างไฟล์ PDF
+    function generatePDF() {
+        let age = document.getElementById('age-input').value;
+        let price = document.getElementById('sticky-price-amount').innerText;
+        if(price === '-' || price === '0') { alert("กรุณาตรวจสอบอายุหรือแผนให้ถูกต้องก่อนดาวน์โหลด"); return; }
+
+        const element = document.getElementById('pdf-content');
+        
+        // 1. ซ่อนปุ่มและวิดีโอ ที่ไม่ต้องการให้ออกไปใน PDF
+        const elementsToHide = element.querySelectorAll('.hide-on-pdf');
+        elementsToHide.forEach(el => el.style.display = 'none');
+
+        // เปลี่ยนข้อความปุ่มระหว่างรอ
+        const btn = document.getElementById('btn-generate-pdf');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังสร้างเอกสาร...';
+
+        // 2. ตั้งชื่อไฟล์ (เพิ่มข้อมูลขั้นอาชีพลงไปในชื่อไฟล์ด้วย)
+        const planName = planDetails[currentPlanId].name;
+        const genderStr = currentGender === 'male' ? 'ชาย' : 'หญิง';
+        const typeStr = isDeductible ? 'มีส่วนร่วมจ่าย' : 'เหมาจ่ายตั้งแต่บาทแรก';
+        const occStr = currentOccClass === 1 ? '1-2' : currentOccClass;
+        const fileName = `สรุปแผน_PreciousCare_${planName}_ขั้นอาชีพ${occStr}_${genderStr}_${age}ปี_${price}บาท.pdf`;
+
+        // 3. กำหนดค่า Option ของ html2pdf
+        const opt = {
+            margin:       10, // ระยะขอบ (มิลลิเมตร)
+            filename:     fileName,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { 
+                scale: 2, // เพิ่มความละเอียดภาพ x2
+                useCORS: true, // สำคัญ! เพื่อให้โหลดภาพโปรไฟล์และ QR Code จากภายนอกได้
+                scrollY: 0
+            },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // 4. สั่ง Generate
+        html2pdf().set(opt).from(element).save().then(() => {
+            // 5. เมื่อเซฟเสร็จ คืนค่า UI กลับมาตามเดิม
+            elementsToHide.forEach(el => {
+                if(el.classList.contains('action-buttons') || el.classList.contains('header-right')) {
+                    el.style.display = 'flex';
+                } else {
+                    el.style.display = 'block';
+                }
+            });
+            btn.innerHTML = originalText;
+        });
     }
 
     window.addEventListener('scroll', () => {
